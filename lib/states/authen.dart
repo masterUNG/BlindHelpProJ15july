@@ -1,4 +1,5 @@
 import 'package:blindhelp/widgets/widget_button.dart';
+import 'package:blindhelp/widgets/widget_button_outline.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_logo_appname.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,16 @@ class Authen extends StatelessWidget {
                 iconData: Icons.person_3_outlined,
               ),
             ],
-          )
+          ),
+           Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              WidgetButtonOutline(
+                label: 'ลงทะเบียน',
+                pressFunc: () {},
+                iconData: Icons.person_3_outlined,
+              ),
+            ],
+          ),
         ],
       ),
     );

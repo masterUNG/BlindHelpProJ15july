@@ -19,16 +19,16 @@ class WidgetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 16),
-      width: 250,
+      width: 250,height: 30,
       child: ElevatedButton.icon(
         onPressed: pressFunc,
-        icon: Icon(iconData),
+        icon: Icon(iconData, size: 20,),
         label: WidgetText(
           data: label,
           textStyle: Theme.of(context)
               .textTheme
               .titleMedium!
-              .copyWith(color: Colors.white, fontWeight: FontWeight.w700),
+              .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: Theme.of(context).primaryColor,
