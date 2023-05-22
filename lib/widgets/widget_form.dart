@@ -8,21 +8,26 @@ class WidgetForm extends StatelessWidget {
     this.prefixWidget,
     this.subfixWidget,
     this.textEditingController,
+    this.labelWidget,
+    this.marginBottom,
   }) : super(key: key);
 
   final String? hint;
   final Widget? prefixWidget;
   final Widget? subfixWidget;
   final TextEditingController? textEditingController;
+  final Widget? labelWidget;
+  final double? marginBottom;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 250,
       height: 40,
-      margin: const EdgeInsets.only(top: 16),
+      margin:  EdgeInsets.only(top: 16, bottom: marginBottom ?? 0.0),
       child: TextFormField(
         decoration: InputDecoration(
+          label: labelWidget,
           hintText: hint,
           prefixIcon: prefixWidget,
           suffixIcon: subfixWidget,

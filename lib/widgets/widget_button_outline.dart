@@ -37,8 +37,8 @@ class WidgetButtonOutline extends StatelessWidget {
           // backgroundColor: Theme.of(context).primaryColor,
           // foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(color: Theme.of(context).primaryColor)),
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       ),
     );
