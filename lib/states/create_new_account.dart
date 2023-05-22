@@ -48,41 +48,84 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
             surnameForm(),
             phoneForm(),
             const WidgetTitle(title: 'ที่อยู่ผู้สมัคร'),
-            Row(
+            proviceDropdown(),
+            amphurDropdown(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Obx amphurDropdown() {
+    return Obx(() {
+      return appController.amphurNameThModels.isEmpty
+          ? const SizedBox()
+          : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   decoration: AppConstant().borderBox(),
                   width: 250,
                   height: 40,
-                  padding: const EdgeInsets.symmetric(horizontal: 8),margin: const EdgeInsets.only(top: 16),
-                  child: Obx(() {
-                    return appController.provinceNameThModels.isEmpty
-                        ? const SizedBox()
-                        : DropdownButton(
-                            isExpanded: true,
-                            underline: const SizedBox(),
-                            items: appController.provinceNameThModels
-                                .map(
-                                  (element) => DropdownMenuItem(
-                                    child: WidgetText(data: element.name_th),
-                                    value: element,
-                                  ),
-                                )
-                                .toList(),
-                            value: appController.chooseProviceModels.last,
-                            hint: const WidgetText(data: 'จังหวัด | Province'),
-                            onChanged: (value) {
-                              appController.chooseProviceModels.add(value);
-                            },
-                          );
-                  }),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  margin: const EdgeInsets.only(top: 16),
+                  child: DropdownButton(
+                    underline: const SizedBox(),
+                    isExpanded: true,
+                    items: appController.amphurNameThModels
+                        .map(
+                          (element) => DropdownMenuItem(
+                            child: WidgetText(data: element.name_th),
+                            value: element,
+                          ),
+                        )
+                        .toList(),
+                    value: appController.chooseAmphurModels.last,
+                    hint: const WidgetText(data: 'เขต/อำเภอ'),
+                    onChanged: (value) {
+                      appController.chooseAmphurModels.add(value);
+                    },
+                  ),
                 ),
               ],
-            ),
-          ],
+            );
+    });
+  }
+
+  Row proviceDropdown() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          decoration: AppConstant().borderBox(),
+          width: 250,
+          height: 40,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          margin: const EdgeInsets.only(top: 16),
+          child: Obx(() {
+            return appController.provinceNameThModels.isEmpty
+                ? const SizedBox()
+                : DropdownButton(
+                    isExpanded: true,
+                    underline: const SizedBox(),
+                    items: appController.provinceNameThModels
+                        .map(
+                          (element) => DropdownMenuItem(
+                            child: WidgetText(data: element.name_th),
+                            value: element,
+                          ),
+                        )
+                        .toList(),
+                    value: appController.chooseProviceModels.last,
+                    hint: const WidgetText(data: 'จังหวัด | Province'),
+                    onChanged: (value) {
+                      appController.chooseProviceModels.add(value);
+                      AppService().readAmphur(idProvince: value!.id);
+                    },
+                  );
+          }),
         ),
-      ),
+      ],
     );
   }
 
