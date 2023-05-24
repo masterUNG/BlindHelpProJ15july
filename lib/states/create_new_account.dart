@@ -2,6 +2,8 @@
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
+import 'package:blindhelp/utility/app_snackbar.dart';
+import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_title.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,12 @@ class CreateNewAccount extends StatefulWidget {
 
 class _CreateNewAccountState extends State<CreateNewAccount> {
   AppController appController = Get.put(AppController());
+  TextEditingController nameController = TextEditingController();
+  TextEditingController surNameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController alleyWayController = TextEditingController();
+  TextEditingController houseNumberController = TextEditingController();
+  TextEditingController spcialController = TextEditingController();
 
   @override
   void initState() {
@@ -50,10 +58,189 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
             const WidgetTitle(title: 'ที่อยู่ผู้สมัคร'),
             proviceDropdown(),
             amphurDropdown(),
+            districZipGroup(),
+            Obx(() {
+              return appController.chooseDistriceModels.last == null
+                  ? const SizedBox()
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        WidgetTitle(title: appController.typeUser.value),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            WidgetForm(
+                              labelWidget: WidgetText(
+                                  data: appController.typeUser.value ==
+                                          AppConstant.typeUsers[0]
+                                      ? 'โรงพยาบาลที่รักษาประจำ'
+                                      : 'พื้นที่ดูแล'),textEditingController: spcialController,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              value: appController.accept.value,
+                              onChanged: (value) {
+                                appController.accept.value = value!;
+                              },
+                            ),
+                            Column(
+                              children: [
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  width: 250,
+                                  child: WidgetText(
+                                    data:
+                                        'การคลิกปุ่มนี้เพื่อใช้บริการ หมายความว่า ข้าพเจ้าตกลงให้ blind help มีสิทธิ์รวบรวม ใช้ และเปิดเผยข้อมูลที่ข้าพเจ้าเตรียมให้โดยเป็นไปตาม ประกาศความเป็นส่วนตัว และข้าพเจ้าตกลงปฏิบัติตาม ข้อกำหนดและเงื่อนไขในการใช้บริการ ซึ่งข้าพเจ้าได้อ่านและทำความเข้าใจเรียบร้อยแล้ว',
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            WidgetButton(
+                                label: 'ลงทะเบียน',
+                                pressFunc: () {
+                                  if (nameController.text.isEmpty) {
+                                    AppSnackBar(
+                                            context: context,
+                                            title: 'ชื่อจริง ?',
+                                            message: 'โปรดกรอกชื่อจริง ด้วยคะ')
+                                        .errorSnackBar();
+                                  } else if (surNameController.text.isEmpty) {
+                                    AppSnackBar(
+                                            context: context,
+                                            title: 'นามสกุล ?',
+                                            message: 'โปรดกรอกนามสกุล ด้วยคะ')
+                                        .errorSnackBar();
+                                  } else if (phoneController.text.isEmpty) {
+                                    AppSnackBar(
+                                            context: context,
+                                            title: 'เบอร์ติดต่อ ?',
+                                            message: 'โปรดกรอกเบอร์ติดต่อ ด้วยคะ')
+                                        .errorSnackBar();
+                                  } else if (alleyWayController.text.isEmpty) {
+                                    AppSnackBar(
+                                            context: context,
+                                            title: 'หมู่บ้าน หรือ ซอย ?',
+                                            message: 'โปรดกรอกหมู่บ้าน หรือ ซอย ด้วยคะ')
+                                        .errorSnackBar();
+                                  } else if (houseNumberController.text.isEmpty) {
+                                    AppSnackBar(
+                                            context: context,
+                                            title: 'บ้านเลขที่ ?',
+                                            message: 'โปรดกรอกบ้านเลขที่ ด้วยคะ')
+                                        .errorSnackBar();
+                                  } else if (spcialController.text.isEmpty) {
+                                    if (appController.typeUser.value == AppConstant.typeUsers[0]) {
+                                      AppSnackBar(
+                                            context: context,
+                                            title: 'โรงพยาบาลที่รักษาประจำ ?',
+                                            message: 'โปรดกรอก โรงพยาบาลที่รักษาประจำ ด้วยคะ')
+                                        .errorSnackBar();
+                                    } else {
+                                      AppSnackBar(
+                                            context: context,
+                                            title: 'พื้นที่ดูแล ?',
+                                            message: 'โปรดกรอก พื้นที่ดูแล ด้วยคะ')
+                                        .errorSnackBar();
+                                    }
+                                  } else if (!appController.accept.value) {
+                                    AppSnackBar(
+                                            context: context,
+                                            title: 'ข้อกำหนด และ เงื่อนไข ?',
+                                            message: 'โปรดยืนยัน ข้อกำหนด และ เงื่อนไข ด้วยคะ')
+                                        .errorSnackBar();
+                                  } else {}
+                                },
+                                iconData: Icons.person),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                      ],
+                    );
+            })
           ],
         ),
       ),
     );
+  }
+
+  Obx districZipGroup() {
+    return Obx(() {
+      return appController.chooseAmphurModels.last == null
+          ? const SizedBox()
+          : Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      decoration: AppConstant().borderBox(),
+                      width: 250,
+                      height: 40,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      margin: const EdgeInsets.only(top: 16),
+                      child: DropdownButton(
+                        isExpanded: true,
+                        underline: const SizedBox(),
+                        items: appController.districeNameThModels
+                            .map(
+                              (element) => DropdownMenuItem(
+                                child: WidgetText(data: element.name_th),
+                                value: element,
+                              ),
+                            )
+                            .toList(),
+                        value: appController.chooseDistriceModels.last,
+                        hint: const WidgetText(data: 'แขวง/ตำบล'),
+                        onChanged: (value) {
+                          appController.chooseDistriceModels.add(value);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  width: 250,
+                  height: 40,
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 8),
+                  margin: const EdgeInsets.only(top: 16),
+                  decoration: AppConstant().borderBox(),
+                  child: WidgetText(
+                      data: appController.chooseDistriceModels.last?.zip_code ??
+                          ''),
+                ),
+                WidgetForm(
+                  labelWidget: const WidgetText(data: 'หมู่/ซอย'),
+                  textEditingController: alleyWayController,
+                ),
+                WidgetForm(
+                  labelWidget: const WidgetText(data: 'บ้านเลขที่'),
+                  textEditingController: houseNumberController,textInputType: TextInputType.number,
+                ),
+              ],
+            );
+    });
   }
 
   Obx amphurDropdown() {
@@ -84,6 +271,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                     hint: const WidgetText(data: 'เขต/อำเภอ'),
                     onChanged: (value) {
                       appController.chooseAmphurModels.add(value);
+                      AppService().readDistrice(idAmphur: value!.id);
                     },
                   ),
                 ),
@@ -130,32 +318,38 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   }
 
   Row phoneForm() {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         WidgetForm(
-          labelWidget: WidgetText(data: 'เบอร์โทรติดต่อ'),
+          labelWidget: const WidgetText(data: 'เบอร์โทรติดต่อ'),
           marginBottom: 16,
+          textEditingController: phoneController,
+          textInputType: TextInputType.phone,
         ),
       ],
     );
   }
 
   Row surnameForm() {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        WidgetForm(labelWidget: WidgetText(data: 'นามสกุล')),
+        WidgetForm(
+          labelWidget: const WidgetText(data: 'นามสกุล'),
+          textEditingController: surNameController,
+        ),
       ],
     );
   }
 
   Row nameForm() {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         WidgetForm(
-          labelWidget: WidgetText(data: 'ชื่อจริง'),
+          labelWidget: const WidgetText(data: 'ชื่อจริง'),
+          textEditingController: nameController,
         ),
       ],
     );
