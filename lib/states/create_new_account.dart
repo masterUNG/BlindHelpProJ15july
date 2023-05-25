@@ -27,6 +27,8 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
   TextEditingController alleyWayController = TextEditingController();
   TextEditingController houseNumberController = TextEditingController();
   TextEditingController spcialController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -55,6 +57,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
             nameForm(),
             surnameForm(),
             phoneForm(),
+            const WidgetTitle(title: 'ข้อมูลสำหรับลงชื่อเข้าใช้งาน'),
+            emailForm(),
+            passwordForm(),
             const WidgetTitle(title: 'ที่อยู่ผู้สมัคร'),
             proviceDropdown(),
             amphurDropdown(),
@@ -77,7 +82,8 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                   data: appController.typeUser.value ==
                                           AppConstant.typeUsers[0]
                                       ? 'โรงพยาบาลที่รักษาประจำ'
-                                      : 'พื้นที่ดูแล'),textEditingController: spcialController,
+                                      : 'พื้นที่ดูแล'),
+                              textEditingController: spcialController,
                             ),
                           ],
                         ),
@@ -133,39 +139,59 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                     AppSnackBar(
                                             context: context,
                                             title: 'เบอร์ติดต่อ ?',
-                                            message: 'โปรดกรอกเบอร์ติดต่อ ด้วยคะ')
+                                            message:
+                                                'โปรดกรอกเบอร์ติดต่อ ด้วยคะ')
+                                        .errorSnackBar();
+                                  } else if (emailController.text.isEmpty) {
+                                    AppSnackBar(
+                                            context: context,
+                                            title: 'อีเมล ?',
+                                            message: 'โปรดกรอกอีเมล ด้วยคะ')
+                                        .errorSnackBar();
+                                  } else if (passwordController.text.isEmpty) {
+                                    AppSnackBar(
+                                            context: context,
+                                            title: 'Password ?',
+                                            message: 'โปรดกรอก Password ด้วยคะ')
                                         .errorSnackBar();
                                   } else if (alleyWayController.text.isEmpty) {
                                     AppSnackBar(
                                             context: context,
                                             title: 'หมู่บ้าน หรือ ซอย ?',
-                                            message: 'โปรดกรอกหมู่บ้าน หรือ ซอย ด้วยคะ')
+                                            message:
+                                                'โปรดกรอกหมู่บ้าน หรือ ซอย ด้วยคะ')
                                         .errorSnackBar();
-                                  } else if (houseNumberController.text.isEmpty) {
+                                  } else if (houseNumberController
+                                      .text.isEmpty) {
                                     AppSnackBar(
                                             context: context,
                                             title: 'บ้านเลขที่ ?',
-                                            message: 'โปรดกรอกบ้านเลขที่ ด้วยคะ')
+                                            message:
+                                                'โปรดกรอกบ้านเลขที่ ด้วยคะ')
                                         .errorSnackBar();
                                   } else if (spcialController.text.isEmpty) {
-                                    if (appController.typeUser.value == AppConstant.typeUsers[0]) {
+                                    if (appController.typeUser.value ==
+                                        AppConstant.typeUsers[0]) {
                                       AppSnackBar(
-                                            context: context,
-                                            title: 'โรงพยาบาลที่รักษาประจำ ?',
-                                            message: 'โปรดกรอก โรงพยาบาลที่รักษาประจำ ด้วยคะ')
-                                        .errorSnackBar();
+                                              context: context,
+                                              title: 'โรงพยาบาลที่รักษาประจำ ?',
+                                              message:
+                                                  'โปรดกรอก โรงพยาบาลที่รักษาประจำ ด้วยคะ')
+                                          .errorSnackBar();
                                     } else {
                                       AppSnackBar(
-                                            context: context,
-                                            title: 'พื้นที่ดูแล ?',
-                                            message: 'โปรดกรอก พื้นที่ดูแล ด้วยคะ')
-                                        .errorSnackBar();
+                                              context: context,
+                                              title: 'พื้นที่ดูแล ?',
+                                              message:
+                                                  'โปรดกรอก พื้นที่ดูแล ด้วยคะ')
+                                          .errorSnackBar();
                                     }
                                   } else if (!appController.accept.value) {
                                     AppSnackBar(
                                             context: context,
                                             title: 'ข้อกำหนด และ เงื่อนไข ?',
-                                            message: 'โปรดยืนยัน ข้อกำหนด และ เงื่อนไข ด้วยคะ')
+                                            message:
+                                                'โปรดยืนยัน ข้อกำหนด และ เงื่อนไข ด้วยคะ')
                                         .errorSnackBar();
                                   } else {}
                                 },
@@ -236,7 +262,8 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                 ),
                 WidgetForm(
                   labelWidget: const WidgetText(data: 'บ้านเลขที่'),
-                  textEditingController: houseNumberController,textInputType: TextInputType.number,
+                  textEditingController: houseNumberController,
+                  textInputType: TextInputType.number,
                 ),
               ],
             );
@@ -350,6 +377,31 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
         WidgetForm(
           labelWidget: const WidgetText(data: 'ชื่อจริง'),
           textEditingController: nameController,
+        ),
+      ],
+    );
+  }
+
+  Row emailForm() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        WidgetForm(
+          labelWidget: const WidgetText(data: 'อีเมล'),
+          textEditingController: emailController,
+        ),
+      ],
+    );
+  }
+
+  Row passwordForm() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        WidgetForm(
+          labelWidget: const WidgetText(data: 'รหัสผ่านหรือพาสเวิร์ด'),
+          marginBottom: 16,
+          textEditingController: passwordController,
         ),
       ],
     );

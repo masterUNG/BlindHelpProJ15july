@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "733041689264",
+    "project_id": "blindhelp-5cf59",
+    "storage_bucket": "blindhelp-5cf59.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733041689264:android:ec82f5c9ce26a37541f175",
+        "android_client_info": {
+          "package_name": "com.wasan.blindhelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733041689264-uatekj76remgto2g5ppu816mc2galrbk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3l3ZFxPHexHYm2o54QRXIwSSPvzC2fCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733041689264-uatekj76remgto2g5ppu816mc2galrbk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
