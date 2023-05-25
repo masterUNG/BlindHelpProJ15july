@@ -9,6 +9,12 @@ class AppService {
   AppController appController = Get.put(AppController());
 
   Future<void> readDistrice({required String idAmphur}) async {
+    if (appController.districeNameThModels.isNotEmpty) {
+      appController.districeNameThModels.clear();
+      appController.chooseDistriceModels.clear();
+      appController.chooseDistriceModels.add(null);
+    }
+
     String urlApi =
         'https://www.androidthai.in.th/flutter/getDistriceByAmphure.php?isAdd=true&amphure_id=$idAmphur';
     await Dio().get(urlApi).then((value) {
