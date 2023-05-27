@@ -1,11 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
+import 'package:blindhelp/utility/app_dialog.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/utility/app_snackbar.dart';
 import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_title.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:blindhelp/widgets/widget_image_asset.dart';
@@ -122,7 +126,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                           children: [
                             WidgetButton(
                                 label: 'ลงทะเบียน',
-                                pressFunc: () {
+                                pressFunc: () async {
                                   if (nameController.text.isEmpty) {
                                     AppSnackBar(
                                             context: context,
@@ -193,7 +197,68 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                             message:
                                                 'โปรดยืนยัน ข้อกำหนด และ เงื่อนไข ด้วยคะ')
                                         .errorSnackBar();
-                                  } else {}
+                                  } else {
+                                    AppDialog(context: context)
+                                        .progressDialog();
+                                    await FirebaseAuth.instance
+                                        .createUserWithEmailAndPassword(
+                                            email: emailController.text,
+                                            password: passwordController.text)
+                                        .then((value) async {
+                                      String uid = value.user!.uid;
+                                      UserModel userModel = UserModel(
+                                          uid: uid,
+                                          typeUser:
+                                              appController.typeUser.value,
+                                          name: nameController.text,
+                                          surName: surNameController.text,
+                                          phone: phoneController.text,
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                          province: appController
+                                              .chooseProviceModels
+                                              .last!
+                                              .name_th,
+                                          amphur: appController
+                                              .chooseAmphurModels.last!.name_th,
+                                          districe: appController
+                                              .chooseDistriceModels
+                                              .last!
+                                              .name_th,
+                                          zipCode: appController
+                                              .chooseDistriceModels
+                                              .last!
+                                              .zip_code,
+                                          alleyWay: alleyWayController.text,
+                                          houseNumber:
+                                              houseNumberController.text,
+                                          spcial: spcialController.text,
+                                          timestamp: Timestamp.fromDate(
+                                              DateTime.now()));
+
+                                      await FirebaseFirestore.instance
+                                          .collection('user')
+                                          .doc(uid)
+                                          .set(userModel.toMap())
+                                          .then((value) {
+                                        Get.back();
+                                        Get.back();
+                                        AppSnackBar(
+                                                context: context,
+                                                title: 'ลงทะเบียนสำเร็จ',
+                                                message:
+                                                    'ลงชื่อเข้าใช้งานได้เลย คะ')
+                                            .normalSnackBar();
+                                      });
+                                    }).catchError((onError) {
+                                      Get.back();
+                                      AppSnackBar(
+                                              context: context,
+                                              title: onError.code,
+                                              message: onError.message)
+                                          .errorSnackBar();
+                                    });
+                                  }
                                 },
                                 iconData: Icons.person),
                           ],

@@ -9,20 +9,25 @@ class WidgetButton extends StatelessWidget {
     required this.label,
     required this.pressFunc,
     required this.iconData,
+    this.size,
   }) : super(key: key);
 
   final String label;
   final Function() pressFunc;
   final IconData iconData;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       // margin: const EdgeInsets.only(top: 8),
-      width: 250,height: 30,
+      width: size ?? 250, height: 30,
       child: ElevatedButton.icon(
         onPressed: pressFunc,
-        icon: Icon(iconData, size: 20,),
+        icon: Icon(
+          iconData,
+          size: 20,
+        ),
         label: WidgetText(
           data: label,
           textStyle: Theme.of(context)

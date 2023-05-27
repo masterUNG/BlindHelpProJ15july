@@ -1,4 +1,5 @@
 import 'package:blindhelp/models/name_th_model.dart';
+import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +11,9 @@ class AppController extends GetxController {
   RxList<NameThModel?> chooseAmphurModels = <NameThModel?>[null].obs;
   RxList<NameThModel> districeNameThModels = <NameThModel>[].obs;
   RxList<NameThModel?> chooseDistriceModels = <NameThModel?>[null].obs;
-
   RxBool accept = false.obs;
+  RxBool remember = false.obs;
+
+  RxString uidLogin = ''.obs;
+  RxList<UserModel> userModelLogins = <UserModel>[].obs;
 }
