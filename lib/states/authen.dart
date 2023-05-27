@@ -14,6 +14,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Authen extends StatefulWidget {
   const Authen({super.key});
@@ -117,14 +118,12 @@ class _AuthenState extends State<Authen> {
                             .collection('user')
                             .doc(uid)
                             .get()
-                            .then((value)async {
-
+                            .then((value) async {
                           if (appController.remember.value) {
-                            
+                            SharedPreferences preferences =
+                                await SharedPreferences.getInstance();
+                            preferences.setBool('remember', true);
                           }
-
-
-
 
                           Get.back();
                           UserModel userModel =
