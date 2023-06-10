@@ -19,7 +19,7 @@ class WidgetButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       // margin: const EdgeInsets.only(top: 8),
       width: size ?? 250, height: 30,
       child: ElevatedButton.icon(

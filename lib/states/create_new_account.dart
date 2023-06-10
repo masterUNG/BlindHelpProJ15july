@@ -296,6 +296,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                         items: appController.districeNameThModels
                             .map(
                               (element) => DropdownMenuItem(
+                                // ignore: sort_child_properties_last
                                 child: WidgetText(data: element.name_th),
                                 value: element,
                               ),
@@ -354,6 +355,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                     items: appController.amphurNameThModels
                         .map(
                           (element) => DropdownMenuItem(
+                            // ignore: sort_child_properties_last
                             child: WidgetText(data: element.name_th),
                             value: element,
                           ),
@@ -391,6 +393,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                     items: appController.provinceNameThModels
                         .map(
                           (element) => DropdownMenuItem(
+                            // ignore: sort_child_properties_last
                             child: WidgetText(data: element.name_th),
                             value: element,
                           ),

@@ -135,6 +135,7 @@ class _AuthenState extends State<Authen> {
                               AppConstant.typeUsers[1]) {
                             Get.offAllNamed('/helper');
                           } else {
+                            // ignore: use_build_context_synchronously
                             AppSnackBar(
                                 context: context,
                                 title: 'Have Proble',

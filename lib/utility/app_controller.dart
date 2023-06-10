@@ -13,7 +13,8 @@ class AppController extends GetxController {
   RxList<NameThModel?> chooseDistriceModels = <NameThModel?>[null].obs;
   RxBool accept = false.obs;
   RxBool remember = false.obs;
-
   RxString uidLogin = ''.obs;
   RxList<UserModel> userModelLogins = <UserModel>[].obs;
+
+  RxInt indexBody = 0.obs;
 }
