@@ -6,6 +6,6 @@ class ReadDrugLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetText(data: 'ReadDrugLabel');
+    return const WidgetText(data: 'ReadDrugLabel');
   }
 }

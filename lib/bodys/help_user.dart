@@ -6,6 +6,6 @@ class HelpUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetText(data: 'HelpUser');
+    return const WidgetText(data: 'HelpUser');
   }
 }

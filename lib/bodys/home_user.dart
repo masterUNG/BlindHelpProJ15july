@@ -6,6 +6,6 @@ class HomeUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetText(data: 'HomeUser');
+    return const WidgetText(data: 'HomeUser');
   }
 }

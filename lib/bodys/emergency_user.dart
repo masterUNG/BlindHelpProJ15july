@@ -6,6 +6,6 @@ class EmergencyUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetText(data: 'EmergencyUser');
+    return const WidgetText(data: 'EmergencyUser');
   }
 }

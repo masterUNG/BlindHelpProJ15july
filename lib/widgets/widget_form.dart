@@ -10,8 +10,10 @@ class WidgetForm extends StatelessWidget {
     this.textEditingController,
     this.labelWidget,
     this.marginBottom,
+    this.marginTop,
     this.textInputType,
     this.obsecu,
+    this.width,
   }) : super(key: key);
 
   final String? hint;
@@ -20,15 +22,17 @@ class WidgetForm extends StatelessWidget {
   final TextEditingController? textEditingController;
   final Widget? labelWidget;
   final double? marginBottom;
+  final double? marginTop;
   final TextInputType? textInputType;
   final bool? obsecu;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250,
+      width: width ?? 250,
       height: 40,
-      margin: EdgeInsets.only(top: 16, bottom: marginBottom ?? 0.0),
+      margin: EdgeInsets.only(top: marginTop ?? 16, bottom: marginBottom ?? 0.0),
       child: TextFormField(
         controller: textEditingController,
         obscureText: obsecu ?? false,

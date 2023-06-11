@@ -2,8 +2,10 @@ import 'package:blindhelp/bodys/emergency_user.dart';
 import 'package:blindhelp/bodys/help_user.dart';
 import 'package:blindhelp/bodys/home_user.dart';
 import 'package:blindhelp/bodys/read_drug_lable.dart';
-import 'package:blindhelp/utility/app_constant.dart';
+import 'package:blindhelp/states/edit_profile_user.dart';
 import 'package:blindhelp/utility/app_controller.dart';
+import 'package:blindhelp/widgets/widget_header_drawer.dart';
+import 'package:blindhelp/widgets/widget_menu.dart';
 import 'package:blindhelp/widgets/widget_signout.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:flutter/material.dart';
@@ -71,11 +73,19 @@ class _MainUserState extends State<MainUser> {
                   WidgetText(data: appBarTitles[appController.indexBody.value]),
               // actions: const [WidgetSignOut()],
             ),
-            endDrawer: const Drawer(
+            endDrawer: Drawer(
               child: Column(
                 children: [
-                  UserAccountsDrawerHeader(
-                      accountName: null, accountEmail: null)
+                  const WidgetHeaderDrawer(),
+                  WidgetMemu(
+                    leadWidget: const Icon(Icons.person),
+                    titleWidget: const WidgetText(data: 'แก้ไขข้อมูล'),
+                    tapFunc: () {
+                      Get.back();
+                      Get.to(const EditProfileUser())!.then((value) => null);
+                    },
+                  ),
+                  const WidgetSignOut(),
                 ],
               ),
             ),
