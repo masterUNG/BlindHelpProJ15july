@@ -457,6 +457,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
         WidgetForm(
           labelWidget: const WidgetText(data: 'อีเมล'),
           textEditingController: emailController,
+          textInputType: TextInputType.emailAddress,
         ),
       ],
     );

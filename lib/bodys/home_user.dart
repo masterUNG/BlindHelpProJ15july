@@ -14,7 +14,7 @@ class HomeUser extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               padding: const EdgeInsets.symmetric(vertical: 8),
               decoration: AppConstant().borderBox(),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

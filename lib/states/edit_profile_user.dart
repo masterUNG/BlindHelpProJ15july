@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/widgets/widget_circle_image.dart';
