@@ -14,6 +14,7 @@ class WidgetForm extends StatelessWidget {
     this.textInputType,
     this.obsecu,
     this.width,
+    this.changeFunc,
   }) : super(key: key);
 
   final String? hint;
@@ -26,6 +27,7 @@ class WidgetForm extends StatelessWidget {
   final TextInputType? textInputType;
   final bool? obsecu;
   final double? width;
+  final Function(String)? changeFunc;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class WidgetForm extends StatelessWidget {
       width: width ?? 250,
       height: 40,
       margin: EdgeInsets.only(top: marginTop ?? 16, bottom: marginBottom ?? 0.0),
-      child: TextFormField(
+      child: TextFormField(onChanged: changeFunc,
         controller: textEditingController,
         obscureText: obsecu ?? false,
         keyboardType: textInputType,

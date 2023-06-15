@@ -1,12 +1,33 @@
 import 'dart:convert';
 
 import 'package:blindhelp/models/name_th_model.dart';
+import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  Future<void> readUserModelLogin() async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .get()
+        .then((value) {
+      UserModel userModel = UserModel.fromMap(value.data()!);
+      appController.userModelLogins.add(userModel);
+    });
+  }
+
+  Future<void> updateUser({required Map<String, dynamic> data}) async {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid);
+
+    documentReference.update(data);
+  }
 
   Future<void> readDistrice({required String idAmphur}) async {
     if (appController.districeNameThModels.isNotEmpty) {
