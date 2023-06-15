@@ -98,7 +98,7 @@ class UserModel {
       bloodTyoe: (map['bloodTyoe'] ?? '') as String,
       gender: (map['gender'] ?? '') as String,
       age: (map['age'] ?? '') as String,
-      birth: map['birth'],
+      birth: map['birth'] ?? Timestamp(0, 0),
       weight: (map['weight'] ?? '') as String,
       height: (map['height'] ?? '') as String,
       urlAvatar: (map['urlAvatar'] ?? '') as String,

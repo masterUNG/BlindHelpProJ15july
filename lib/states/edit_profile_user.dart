@@ -8,6 +8,7 @@ import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_circle_image.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -154,7 +155,46 @@ class _EditProfileUserState extends State<EditProfileUser> {
                                       map['age'] = p0.trim();
                                     },
                                   ),
-                                  const WidgetText(data: 'วันเดือนปีเกิด'),
+                                  InkWell(
+                                    onTap: () async {
+                                      DateTime dateTime = DateTime.now();
+                                      await showDatePicker(
+                                              context: context,
+                                              initialDate: dateTime,
+                                              firstDate:
+                                                  DateTime(dateTime.year - 100),
+                                              lastDate: dateTime)
+                                          .then((value) {
+                                        change = true;
+                                        Timestamp timestamp =
+                                            Timestamp.fromDate(value!);
+                                        map['birth'] = timestamp;
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: AppConstant().borderBox(),
+                                      width: 100,
+                                      child: Column(
+                                        children: [
+                                          const WidgetText(
+                                              data: 'วันเดือนปีเกิด'),
+                                          WidgetText(
+                                              data: appController
+                                                          .userModelLogins
+                                                          .last
+                                                          .birth ==
+                                                      Timestamp(0, 0)
+                                                  ? '???'
+                                                  : AppService()
+                                                      .timeStampToString(
+                                                          timestamp: appController
+                                                              .userModelLogins
+                                                              .last
+                                                              .birth!)),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                               const SizedBox(

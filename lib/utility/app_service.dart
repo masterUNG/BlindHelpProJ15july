@@ -6,9 +6,16 @@ import 'package:blindhelp/utility/app_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  String timeStampToString({required Timestamp timestamp}) {
+    DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+    String string = dateFormat.format(timestamp.toDate());
+    return string;
+  }
 
   Future<void> readUserModelLogin() async {
     await FirebaseFirestore.instance
