@@ -19,6 +19,13 @@ class UserModel {
   final String houseNumber;
   final String spcial;
   final Timestamp timestamp;
+  final String? bloodTyoe;
+  final String? gender;
+  final String? age;
+  final Timestamp? birth;
+  final String? weight;
+  final String? height;
+  final String? urlAvatar;
   UserModel({
     required this.uid,
     required this.typeUser,
@@ -35,6 +42,13 @@ class UserModel {
     required this.houseNumber,
     required this.spcial,
     required this.timestamp,
+    this.bloodTyoe,
+    this.gender,
+    this.age,
+    this.birth,
+    this.weight,
+    this.height,
+    this.urlAvatar,
   });
 
   Map<String, dynamic> toMap() {
@@ -54,6 +68,13 @@ class UserModel {
       'houseNumber': houseNumber,
       'spcial': spcial,
       'timestamp': timestamp,
+      'bloodTyoe': bloodTyoe,
+      'gender': gender,
+      'age': age,
+      'birth': birth,
+      'weight': weight,
+      'height': height,
+      'urlAvatar': urlAvatar,
     };
   }
 
@@ -73,7 +94,14 @@ class UserModel {
       alleyWay: (map['alleyWay'] ?? '') as String,
       houseNumber: (map['houseNumber'] ?? '') as String,
       spcial: (map['spcial'] ?? '') as String,
-      timestamp: map['timestamp'] ,
+      timestamp: map['timestamp'],
+      bloodTyoe: (map['bloodTyoe'] ?? '') as String,
+      gender: (map['gender'] ?? '') as String,
+      age: (map['age'] ?? '') as String,
+      birth: map['birth'] ?? Timestamp(0, 0),
+      weight: (map['weight'] ?? '') as String,
+      height: (map['height'] ?? '') as String,
+      urlAvatar: (map['urlAvatar'] ?? '') as String,
     );
   }
 

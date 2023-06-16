@@ -6,5 +6,12 @@ class AppConstant {
     'อาสาสมัครสาธารณะสุขประจำหมู่บ้าน(อสม.)',
   ];
 
-  BoxDecoration borderBox() => BoxDecoration(border: Border.all(),borderRadius: BorderRadius.circular(4));
+  BoxDecoration borderBox() => BoxDecoration(
+      border: Border.all(), borderRadius: BorderRadius.circular(4));
+
+  BoxDecoration gradientBox({required BuildContext context}) => BoxDecoration(
+      gradient: RadialGradient(
+          colors: <Color>[Colors.white, Theme.of(context).primaryColor],
+          center: Alignment.topLeft,
+          radius: 1.3));
 }

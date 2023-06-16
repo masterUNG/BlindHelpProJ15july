@@ -119,6 +119,7 @@ class _AuthenState extends State<Authen> {
                             .doc(uid)
                             .get()
                             .then((value) async {
+                              
                           if (appController.remember.value) {
                             SharedPreferences preferences =
                                 await SharedPreferences.getInstance();
@@ -135,6 +136,7 @@ class _AuthenState extends State<Authen> {
                               AppConstant.typeUsers[1]) {
                             Get.offAllNamed('/helper');
                           } else {
+                            // ignore: use_build_context_synchronously
                             AppSnackBar(
                                 context: context,
                                 title: 'Have Proble',
