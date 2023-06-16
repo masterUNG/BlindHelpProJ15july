@@ -5,6 +5,7 @@ import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -18,9 +19,10 @@ class AppService {
   }
 
   Future<void> readUserModelLogin() async {
+    var user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance
         .collection('user')
-        .doc(appController.userModelLogins.last.uid)
+        .doc(user!.uid)
         .get()
         .then((value) {
       UserModel userModel = UserModel.fromMap(value.data()!);

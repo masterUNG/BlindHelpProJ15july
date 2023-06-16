@@ -7,6 +7,7 @@ import 'package:blindhelp/utility/app_snackbar.dart';
 import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_circle_image.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
+import 'package:blindhelp/widgets/widget_icon_button.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,10 @@ class _EditProfileUserState extends State<EditProfileUser> {
     heightController.text = controller.userModelLogins.last.height!;
 
     map = controller.userModelLogins.last.toMap();
+
+    if (controller.timestamps.isNotEmpty) {
+      controller.timestamps.clear();
+    }
   }
 
   @override
@@ -72,8 +77,20 @@ class _EditProfileUserState extends State<EditProfileUser> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const WidgetCircleImage(
-                          radius: 45,
+                        Stack(
+                          children: [
+                            const WidgetCircleImage(
+                              radius: 45,
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: WidgetIconButton(
+                                iconData: Icons.camera,
+                                pressFunc: () {},color: Theme.of(context).primaryColor,
+                              ),
+                            )
+                          ],
                         ),
                         SizedBox(
                           width: 218,
@@ -169,6 +186,7 @@ class _EditProfileUserState extends State<EditProfileUser> {
                                         Timestamp timestamp =
                                             Timestamp.fromDate(value!);
                                         map['birth'] = timestamp;
+                                        appController.timestamps.add(timestamp);
                                       });
                                     },
                                     child: Container(
@@ -180,17 +198,26 @@ class _EditProfileUserState extends State<EditProfileUser> {
                                               data: 'วันเดือนปีเกิด'),
                                           WidgetText(
                                               data: appController
-                                                          .userModelLogins
-                                                          .last
-                                                          .birth ==
-                                                      Timestamp(0, 0)
-                                                  ? '???'
-                                                  : AppService()
-                                                      .timeStampToString(
-                                                          timestamp: appController
+                                                      .timestamps.isEmpty
+                                                  ? appController
                                                               .userModelLogins
                                                               .last
-                                                              .birth!)),
+                                                              .birth ==
+                                                          Timestamp(0, 0)
+                                                      ? '???'
+                                                      : AppService()
+                                                          .timeStampToString(
+                                                              timestamp:
+                                                                  appController
+                                                                      .userModelLogins
+                                                                      .last
+                                                                      .birth!)
+                                                  : AppService()
+                                                      .timeStampToString(
+                                                          timestamp:
+                                                              appController
+                                                                  .timestamps
+                                                                  .last)),
                                         ],
                                       ),
                                     ),

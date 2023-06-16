@@ -119,6 +119,7 @@ class _AuthenState extends State<Authen> {
                             .doc(uid)
                             .get()
                             .then((value) async {
+                              
                           if (appController.remember.value) {
                             SharedPreferences preferences =
                                 await SharedPreferences.getInstance();

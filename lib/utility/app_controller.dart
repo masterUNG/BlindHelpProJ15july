@@ -1,6 +1,7 @@
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_constant.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class AppController extends GetxController {
@@ -15,6 +16,7 @@ class AppController extends GetxController {
   RxBool remember = false.obs;
   RxString uidLogin = ''.obs;
   RxList<UserModel> userModelLogins = <UserModel>[].obs;
-
   RxInt indexBody = 0.obs;
+
+  RxList<Timestamp> timestamps = <Timestamp>[].obs;
 }

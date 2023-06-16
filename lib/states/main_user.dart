@@ -4,6 +4,7 @@ import 'package:blindhelp/bodys/home_user.dart';
 import 'package:blindhelp/bodys/read_drug_lable.dart';
 import 'package:blindhelp/states/edit_profile_user.dart';
 import 'package:blindhelp/utility/app_controller.dart';
+import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_header_drawer.dart';
 import 'package:blindhelp/widgets/widget_menu.dart';
 import 'package:blindhelp/widgets/widget_signout.dart';
@@ -41,10 +42,10 @@ class _MainUserState extends State<MainUser> {
   ];
 
   var icons = <IconData>[
-    Icons.filter_1,
-    Icons.filter_2,
-    Icons.filter_3,
-    Icons.filter_4,
+    Icons.home,
+    Icons.phone,
+    Icons.menu_book,
+    Icons.live_help,
   ];
 
   var items = <BottomNavigationBarItem>[];
@@ -52,6 +53,9 @@ class _MainUserState extends State<MainUser> {
   @override
   void initState() {
     super.initState();
+
+    AppService().readUserModelLogin();
+
     for (var i = 0; i < titles.length; i++) {
       items.add(
         BottomNavigationBarItem(
