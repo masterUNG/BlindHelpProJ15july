@@ -23,15 +23,21 @@ class AppDialog {
         barrierDismissible: false);
   }
 
-  void normalDialog({required String tilte, Widget? firstAction}) {
+  void normalDialog({
+    required String tilte,
+    Widget? iconWidget,
+    Widget? firstAction,
+    Widget? secondAction,
+  }) {
     Get.dialog(
       AlertDialog(
-        icon: const WidgetImageAsset(
+        icon: iconWidget ?? const WidgetImageAsset(
           size: 100,
         ),
         title: WidgetText(data: tilte),
         actions: [
           firstAction ?? const SizedBox(),
+          secondAction ?? const SizedBox(),
           WidgetTextButton(
             label: 'Cancel',
             pressFunc: () => Get.back(),

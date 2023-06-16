@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
@@ -7,10 +8,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  Future<void> takePhoto({required ImageSource imageSource}) async {
+    var result = await ImagePicker()
+        .pickImage(source: imageSource, maxWidth: 800, maxHeight: 800);
+
+    if (result != null) {
+      appController.files.add(File(result.path));
+      appController.nameFiles.add(basename(result.path));
+    }
+  }
 
   String timeStampToString({required Timestamp timestamp}) {
     DateFormat dateFormat = DateFormat('dd/MM/yyyy');

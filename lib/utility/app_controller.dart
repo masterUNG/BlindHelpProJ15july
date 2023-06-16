@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_constant.dart';
@@ -17,6 +19,8 @@ class AppController extends GetxController {
   RxString uidLogin = ''.obs;
   RxList<UserModel> userModelLogins = <UserModel>[].obs;
   RxInt indexBody = 0.obs;
-
   RxList<Timestamp> timestamps = <Timestamp>[].obs;
+
+  RxList<File> files = <File>[].obs;
+  RxList<String> nameFiles= <String>[].obs;
 }

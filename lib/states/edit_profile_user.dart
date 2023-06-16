@@ -2,16 +2,20 @@
 
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
+import 'package:blindhelp/utility/app_dialog.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/utility/app_snackbar.dart';
 import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_circle_image.dart';
+import 'package:blindhelp/widgets/widget_circle_image_file.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_icon_button.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
+import 'package:blindhelp/widgets/widget_text_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfileUser extends StatefulWidget {
   const EditProfileUser({super.key});
@@ -51,6 +55,10 @@ class _EditProfileUserState extends State<EditProfileUser> {
     if (controller.timestamps.isNotEmpty) {
       controller.timestamps.clear();
     }
+
+    if (controller.files.isNotEmpty) {
+      controller.files.clear();
+    }
   }
 
   @override
@@ -79,15 +87,57 @@ class _EditProfileUserState extends State<EditProfileUser> {
                       children: [
                         Stack(
                           children: [
-                            const WidgetCircleImage(
-                              radius: 45,
-                            ),
+                            appController.files.isEmpty
+                                ? const WidgetCircleImage(
+                                    radius: 45,
+                                  )
+                                : WidgetCircleImageFile(
+                                    file: appController.files.last, radius: 45),
                             Positioned(
                               bottom: 0,
                               right: 0,
                               child: WidgetIconButton(
                                 iconData: Icons.camera,
-                                pressFunc: () {},color: Theme.of(context).primaryColor,
+                                pressFunc: () {
+                                  AppDialog(context: context).normalDialog(
+                                    tilte: 'รูปภาพ',
+                                    iconWidget: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        WidgetCircleImage(
+                                          radius: 50,
+                                        ),
+                                      ],
+                                    ),
+                                    firstAction: WidgetTextButton(
+                                      label: 'Camera',
+                                      pressFunc: () {
+                                        AppService()
+                                            .takePhoto(
+                                                imageSource: ImageSource.camera)
+                                            .then((value) {
+                                          change = true;
+                                          Get.back();
+                                        });
+                                      },
+                                    ),
+                                    secondAction: WidgetTextButton(
+                                      label: 'Gallery',
+                                      pressFunc: () {
+                                        AppService()
+                                            .takePhoto(
+                                                imageSource:
+                                                    ImageSource.gallery)
+                                            .then((value) {
+                                              change = true;
+                                              Get.back();
+                                            });
+                                      },
+                                    ),
+                                  );
+                                },
+                                color: Colors.white,
                               ),
                             )
                           ],
