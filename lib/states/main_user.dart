@@ -2,7 +2,9 @@ import 'package:blindhelp/bodys/emergency_user.dart';
 import 'package:blindhelp/bodys/help_user.dart';
 import 'package:blindhelp/bodys/home_user.dart';
 import 'package:blindhelp/bodys/read_drug_lable.dart';
+import 'package:blindhelp/states/disease_list.dart';
 import 'package:blindhelp/states/edit_profile_user.dart';
+import 'package:blindhelp/states/historu_drug_list.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_header_drawer.dart';
@@ -89,6 +91,33 @@ class _MainUserState extends State<MainUser> {
                       Get.to(const EditProfileUser())!.then((value) => null);
                     },
                   ),
+                  WidgetMemu(
+                    leadWidget:
+                        const Icon(Icons.sentiment_very_dissatisfied_sharp),
+                    titleWidget: const WidgetText(data: 'โรคประจำตัว :'),
+                    tapFunc: () {
+                      Get.back();
+                      Get.to(const DiseaseList());
+                    },
+                  ),
+                  WidgetMemu(
+                    leadWidget:
+                        const Icon(Icons.history_rounded),
+                    titleWidget: const WidgetText(data: 'ประวัติการแพ้ยา :'),
+                    tapFunc: () {
+                      Get.back();
+                      Get.to(const HistoryDrugList());
+                    },
+                  ),
+                  WidgetMemu(
+                    leadWidget: const Icon(Icons.face_5),
+                    titleWidget: const WidgetText(
+                        data: 'รายละเอียดความพิการด้านดวงตาและการมองเห็น :'),
+                    tapFunc: () {
+                      Get.back();
+                    },
+                  ),
+                  const Spacer(),
                   const WidgetSignOut(),
                 ],
               ),

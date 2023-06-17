@@ -52,7 +52,7 @@ class _HomeUserState extends State<HomeUser> {
                  height: 150,
                  margin: const EdgeInsets.symmetric(horizontal: 8,vertical: 8),
                  decoration: AppConstant().borderBox(),
-                 child: Text('data'),
+                 child: const Text('data'),
                ),
               Row(
                 children: [
@@ -62,7 +62,7 @@ class _HomeUserState extends State<HomeUser> {
                       height: 150,
                       margin: const EdgeInsets.only(left: 8, right: 4),
                       decoration: AppConstant().borderBox(),
-                      child: Text('data'),
+                      child: const Text('data'),
                     ),
                   ),
                   Expanded(
@@ -71,7 +71,7 @@ class _HomeUserState extends State<HomeUser> {
                       height: 150,
                       margin: const EdgeInsets.only(left: 4, right: 8),
                       decoration: AppConstant().borderBox(),
-                      child: Text('data'),
+                      child: const Text('data'),
                     ),
                   ),
                 ],

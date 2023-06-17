@@ -28,13 +28,16 @@ class AppDialog {
     Widget? iconWidget,
     Widget? firstAction,
     Widget? secondAction,
+    Widget? contentWidget,
   }) {
     Get.dialog(
       AlertDialog(
-        icon: iconWidget ?? const WidgetImageAsset(
-          size: 100,
-        ),
+        icon: iconWidget ??
+            const WidgetImageAsset(
+              size: 100,
+            ),
         title: WidgetText(data: tilte),
+        content: contentWidget,
         actions: [
           firstAction ?? const SizedBox(),
           secondAction ?? const SizedBox(),
@@ -43,7 +46,9 @@ class AppDialog {
             pressFunc: () => Get.back(),
           )
         ],
+        scrollable: true,
       ),
+      
       barrierDismissible: false,
     );
   }
