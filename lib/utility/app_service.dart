@@ -7,6 +7,7 @@ import 'package:blindhelp/utility/app_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,20 @@ import 'package:path/path.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  Future<String?> uploadImage({required String path}) async {
+    String? urlImage;
+    FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+    Reference reference =
+        firebaseStorage.ref().child('$path/${appController.nameFiles.last}');
+
+    UploadTask uploadTask = reference.putFile(appController.files.last);
+    await uploadTask.whenComplete(() async {
+      urlImage = await reference.getDownloadURL();
+    });
+
+    return urlImage;
+  }
 
   Future<void> takePhoto({required ImageSource imageSource}) async {
     var result = await ImagePicker()
