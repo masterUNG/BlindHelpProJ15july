@@ -44,7 +44,7 @@ Future<void> main() async {
       runApp(const MyApp());
     } else {
       FirebaseAuth.instance.authStateChanges().listen((event) async {
-        print('event --> $event');
+        // print('event --> $event');
         if (event == null) {
           initialRoute = '/authen';
           runApp(const MyApp());
@@ -56,7 +56,7 @@ Future<void> main() async {
               .doc(appController.uidLogin.value)
               .get()
               .then((value) {
-            print('value --> ${value.data()}');
+            // print('value --> ${value.data()}');
             UserModel userModel = UserModel.fromMap(value.data()!);
             appController.userModelLogins.add(userModel);
             if (appController.userModelLogins.last.typeUser ==

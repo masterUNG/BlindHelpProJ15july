@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:blindhelp/models/disease_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_controller.dart';
@@ -15,6 +16,15 @@ import 'package:path/path.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
+
+  Future<void> addDisease({required DiseaseModel diseaseModel}) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('disease')
+        .doc()
+        .set(diseaseModel.toMap());
+  }
 
   Future<String?> uploadImage({required String path}) async {
     String? urlImage;
