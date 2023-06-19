@@ -33,7 +33,55 @@ class _HomeUserState extends State<HomeUser> {
                       height: 150,
                       margin: const EdgeInsets.only(left: 8, right: 4),
                       decoration: AppConstant().borderBox(),
-                      child: const WidgetTitle(title: 'โรคประจำตัว:', size: 13,),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const WidgetTitle(
+                            title: 'โรคประจำตัว:',
+                            size: 12,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            width: double.infinity,
+                            height: 45,
+                            decoration:
+                                AppConstant().curveBox(context: context),
+                            child: appController.userDiseaseModels.isEmpty
+                                ? const WidgetTitle(
+                                    title: '-:',
+                                    size: 12,
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ScrollPhysics(),
+                                    itemCount:
+                                        appController.userDiseaseModels.length,
+                                    itemBuilder: (context, index) =>
+                                        WidgetTitle(
+                                      title: appController
+                                          .userDiseaseModels[index].disease,
+                                      size: 12,color: Colors.white,
+                                    ),
+                                  ),
+                          ),
+                          const WidgetTitle(
+                            title: 'ประวัติการแพ้ยา :',
+                            size: 13,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            width: double.infinity,
+                            height: 45,
+                            decoration:
+                                AppConstant().curveBox(context: context),
+                            child: const WidgetTitle(
+                              title: 'ประวัติการแพ้ยา :',
+                              size: 13,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -42,18 +90,21 @@ class _HomeUserState extends State<HomeUser> {
                       height: 150,
                       margin: const EdgeInsets.only(left: 4, right: 8),
                       decoration: AppConstant().borderBox(),
-                      child:const WidgetTitle(title: 'รายละเอียดความพิการด้านดวงตาและการมองเห็น', size: 13,),
+                      child: const WidgetTitle(
+                        title: 'รายละเอียดความพิการด้านดวงตาและการมองเห็น',
+                        size: 13,
+                      ),
                     ),
                   ),
                 ],
               ),
-               Container(
-                 padding: const EdgeInsets.all(8),
-                 height: 150,
-                 margin: const EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-                 decoration: AppConstant().borderBox(),
-                 child: const Text('data'),
-               ),
+              Container(
+                padding: const EdgeInsets.all(8),
+                height: 150,
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                decoration: AppConstant().borderBox(),
+                child: const Text('data'),
+              ),
               Row(
                 children: [
                   Expanded(
@@ -76,7 +127,9 @@ class _HomeUserState extends State<HomeUser> {
                   ),
                 ],
               ),
-              const SizedBox(height: 16,)
+              const SizedBox(
+                height: 16,
+              )
             ],
           );
         });

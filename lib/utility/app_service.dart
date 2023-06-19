@@ -17,6 +17,29 @@ import 'package:path/path.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
+  Future<void> readDisease({String? docIdUserOwnerDisease}) async {
+    String docIdUser =
+        docIdUserOwnerDisease ?? appController.userModelLogins.last.uid;
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(docIdUser)
+        .collection('disease')
+        .orderBy('timestamp')
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        if (appController.userDiseaseModels.isNotEmpty) {
+          appController.userDiseaseModels.clear();
+        }
+
+        for (var element in value.docs) {
+          DiseaseModel diseaseModel = DiseaseModel.fromMap(element.data());
+          appController.userDiseaseModels.add(diseaseModel);
+        }
+      }
+    });
+  }
+
   Future<void> addDisease({required DiseaseModel diseaseModel}) async {
     await FirebaseFirestore.instance
         .collection('user')

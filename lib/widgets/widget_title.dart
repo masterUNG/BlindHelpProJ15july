@@ -8,10 +8,12 @@ class WidgetTitle extends StatelessWidget {
     Key? key,
     required this.title,
     this.size,
+    this.color,
   }) : super(key: key);
 
   final String title;
   final double? size;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class WidgetTitle extends StatelessWidget {
       textStyle: Theme.of(context)
           .textTheme
           .titleMedium!
-          .copyWith(fontWeight: FontWeight.bold, fontSize: size),
+          .copyWith(fontWeight: FontWeight.bold, fontSize: size, color: color),
     );
   }
 }

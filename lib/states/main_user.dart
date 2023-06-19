@@ -58,6 +58,8 @@ class _MainUserState extends State<MainUser> {
 
     AppService().readUserModelLogin();
 
+    AppService().readDisease();
+
     for (var i = 0; i < titles.length; i++) {
       items.add(
         BottomNavigationBarItem(
@@ -101,8 +103,7 @@ class _MainUserState extends State<MainUser> {
                     },
                   ),
                   WidgetMemu(
-                    leadWidget:
-                        const Icon(Icons.history_rounded),
+                    leadWidget: const Icon(Icons.history_rounded),
                     titleWidget: const WidgetText(data: 'ประวัติการแพ้ยา :'),
                     tapFunc: () {
                       Get.back();
