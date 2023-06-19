@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:blindhelp/models/disease_model.dart';
+import 'package:blindhelp/models/hitory_drug_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_constant.dart';
@@ -23,6 +24,6 @@ class AppController extends GetxController {
   RxList<Timestamp> timestamps = <Timestamp>[].obs;
   RxList<File> files = <File>[].obs;
   RxList<String> nameFiles= <String>[].obs;
-
   RxList<DiseaseModel> userDiseaseModels = <DiseaseModel>[].obs;
+  RxList<HistoryDrugModel> historyDrugModels = <HistoryDrugModel>[].obs;
 }

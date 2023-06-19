@@ -48,7 +48,7 @@ class _HomeUserState extends State<HomeUser> {
                                 AppConstant().curveBox(context: context),
                             child: appController.userDiseaseModels.isEmpty
                                 ? const WidgetTitle(
-                                    title: '-:',
+                                    title: '-',
                                     size: 12,
                                   )
                                 : ListView.builder(
@@ -74,11 +74,23 @@ class _HomeUserState extends State<HomeUser> {
                             height: 45,
                             decoration:
                                 AppConstant().curveBox(context: context),
-                            child: const WidgetTitle(
-                              title: 'ประวัติการแพ้ยา :',
-                              size: 13,
-                              color: Colors.white,
-                            ),
+                            child: appController.historyDrugModels.isEmpty
+                                ? const WidgetTitle(
+                                    title: '-',
+                                    size: 12,
+                                  )
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ScrollPhysics(),
+                                    itemCount:
+                                        appController.historyDrugModels.length,
+                                    itemBuilder: (context, index) =>
+                                        WidgetTitle(
+                                      title: appController
+                                          .historyDrugModels[index].historyDrug,
+                                      size: 12,color: Colors.white,
+                                    ),
+                                  ),
                           ),
                         ],
                       ),

@@ -60,6 +60,8 @@ class _MainUserState extends State<MainUser> {
 
     AppService().readDisease();
 
+    AppService().readHistoryDrug();
+
     for (var i = 0; i < titles.length; i++) {
       items.add(
         BottomNavigationBarItem(

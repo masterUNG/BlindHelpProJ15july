@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:blindhelp/models/disease_model.dart';
+import 'package:blindhelp/models/hitory_drug_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_controller.dart';
@@ -40,6 +41,30 @@ class AppService {
     });
   }
 
+  Future<void> readHistoryDrug({String? docIdUserHistoryDrug}) async {
+    String docIdUser =
+        docIdUserHistoryDrug ?? appController.userModelLogins.last.uid;
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(docIdUser)
+        .collection('historyDrug')
+        .orderBy('timestamp')
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        if (appController.historyDrugModels.isNotEmpty) {
+          appController.historyDrugModels.clear();
+        }
+
+        for (var element in value.docs) {
+          HistoryDrugModel historyDrugModel =
+              HistoryDrugModel.fromMap(element.data());
+          appController.historyDrugModels.add(historyDrugModel);
+        }
+      }
+    });
+  }
+
   Future<void> addDisease({required DiseaseModel diseaseModel}) async {
     await FirebaseFirestore.instance
         .collection('user')
@@ -47,6 +72,16 @@ class AppService {
         .collection('disease')
         .doc()
         .set(diseaseModel.toMap());
+  }
+
+  Future<void> addHistoryDrug(
+      {required HistoryDrugModel historyDrugModel}) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('historyDrug')
+        .doc()
+        .set(historyDrugModel.toMap());
   }
 
   Future<String?> uploadImage({required String path}) async {
