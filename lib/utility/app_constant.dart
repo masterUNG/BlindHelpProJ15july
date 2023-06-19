@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
 class AppConstant {
+  static Color bluelive = const Color.fromARGB(255, 78, 146, 236);
+  static Color blue = const Color.fromARGB(255, 120, 159, 237);
+  static Color blueDark = const Color(0xff1257E5);
+
   static final List<String> typeUsers = <String>[
     'คนพิการทางการมองเห็น',
     'อาสาสมัครสาธารณะสุขประจำหมู่บ้าน(อสม.)',
   ];
+
+  TextStyle titleStyle({required BuildContext context, Color? color}) =>
+      Theme.of(context).textTheme.titleMedium!.copyWith(
+          color: color ?? Theme.of(context).primaryColor,
+          fontWeight: FontWeight.w700);
 
   BoxDecoration borderBox() => BoxDecoration(
       border: Border.all(), borderRadius: BorderRadius.circular(4));
@@ -14,4 +23,7 @@ class AppConstant {
           colors: <Color>[Colors.white, Theme.of(context).primaryColor],
           center: Alignment.topLeft,
           radius: 1.3));
+
+  BoxDecoration curveBox({required BuildContext context}) =>
+      BoxDecoration(color: AppConstant.blue, borderRadius: BorderRadius.circular(10));
 }
