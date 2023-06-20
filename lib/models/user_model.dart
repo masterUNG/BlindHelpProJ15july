@@ -26,6 +26,7 @@ class UserModel {
   final String? weight;
   final String? height;
   final String? urlAvatar;
+  final String? disibility;
   UserModel({
     required this.uid,
     required this.typeUser,
@@ -49,6 +50,7 @@ class UserModel {
     this.weight,
     this.height,
     this.urlAvatar,
+    this.disibility,
   });
 
   Map<String, dynamic> toMap() {
@@ -75,6 +77,7 @@ class UserModel {
       'weight': weight,
       'height': height,
       'urlAvatar': urlAvatar,
+      'disibility': disibility,
     };
   }
 
@@ -102,6 +105,7 @@ class UserModel {
       weight: (map['weight'] ?? '') as String,
       height: (map['height'] ?? '') as String,
       urlAvatar: (map['urlAvatar'] ?? '') as String,
+      disibility: (map['disibility'] ?? '') as String,
     );
   }
 
