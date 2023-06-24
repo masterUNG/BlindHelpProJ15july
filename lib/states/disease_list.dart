@@ -10,6 +10,7 @@ import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:blindhelp/widgets/widget_text_rich.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class DiseaseList extends StatefulWidget {
@@ -40,24 +41,64 @@ class _DiseaseListState extends State<DiseaseList> {
             ? const SizedBox()
             : ListView.builder(
                 itemCount: appController.userDiseaseModels.length,
-                itemBuilder: (context, index) => Container(padding: const EdgeInsets.all(8),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: AppConstant().borderBox(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      WidgetTextRich(
-                          title: 'โรคประจำตัว :',
-                          value:
-                              appController.userDiseaseModels[index].disease),
-                      WidgetTextRich(
-                          title: 'วันเดือนปี ที่บันทึก :',
-                          titleColor: AppConstant.bluelive,
-                          value: AppService().timeStampToString(
-                              timestamp: appController
-                                  .userDiseaseModels[index].timestamp)),
-                    ],
+                itemBuilder: (context, index) => Slidable(
+                  key: const ValueKey(0),
+                  endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      extentRatio: 0.5,
+                      children: <Widget>[
+                        SlidableAction(
+                          onPressed: (context) {},
+                          icon: Icons.edit,
+                          label: 'แก้ไข',
+                          backgroundColor: AppConstant.blue,
+                          foregroundColor: Colors.white,
+                        ),
+                        SlidableAction(
+                          onPressed: (context) {
+                            AppDialog(context: context).normalDialog(
+                                tilte: 'ยืนยันลบ โรงประจำตัว',
+                                firstAction: WidgetButton(
+                                    size: 110,
+                                    label: 'ยืนยัน',
+                                    pressFunc: () {
+                                      AppService()
+                                          .deleteDisease(
+                                              docIdDisease: appController
+                                                  .docIdDisease[index])
+                                          .then((value) {
+                                        AppService().readDisease();
+                                        Get.back();
+                                      });
+                                    },
+                                    iconData: Icons.delete));
+                          },
+                          icon: Icons.delete,
+                          label: 'ลบ',
+                          backgroundColor: Colors.red,
+                        ),
+                      ]),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(8),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: AppConstant().borderBox(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        WidgetTextRich(
+                            title: 'โรคประจำตัว :',
+                            value:
+                                appController.userDiseaseModels[index].disease),
+                        WidgetTextRich(
+                            title: 'วันเดือนปี ที่บันทึก :',
+                            titleColor: AppConstant.bluelive,
+                            value: AppService().timeStampToString(
+                                timestamp: appController
+                                    .userDiseaseModels[index].timestamp)),
+                      ],
+                    ),
                   ),
                 ),
               );
