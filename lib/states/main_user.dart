@@ -3,6 +3,7 @@ import 'package:blindhelp/bodys/help_user.dart';
 import 'package:blindhelp/bodys/home_user.dart';
 import 'package:blindhelp/bodys/read_drug_lable.dart';
 import 'package:blindhelp/states/disease_list.dart';
+import 'package:blindhelp/states/edit_disibility.dart';
 import 'package:blindhelp/states/edit_profile_user.dart';
 import 'package:blindhelp/states/historu_drug_list.dart';
 import 'package:blindhelp/utility/app_controller.dart';
@@ -118,6 +119,7 @@ class _MainUserState extends State<MainUser> {
                         data: 'รายละเอียดความพิการด้านดวงตาและการมองเห็น :'),
                     tapFunc: () {
                       Get.back();
+                      Get.to(const EditDisibility());
                     },
                   ),
                   const Spacer(),

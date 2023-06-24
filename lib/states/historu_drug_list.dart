@@ -10,6 +10,7 @@ import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:blindhelp/widgets/widget_text_rich.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class HistoryDrugList extends StatefulWidget {
@@ -40,24 +41,63 @@ class _HistoryDrugListState extends State<HistoryDrugList> {
             ? const SizedBox()
             : ListView.builder(
                 itemCount: appController.historyDrugModels.length,
-                itemBuilder: (context, index) => Container(padding: const EdgeInsets.all(8),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: AppConstant().borderBox(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      WidgetTextRich(
-                          title: 'ประวัติการแพ้ยา :',
-                          value:
-                              appController.historyDrugModels[index].historyDrug),
-                      WidgetTextRich(
-                          title: 'วันเดือนปี ที่บันทึก :',
-                          titleColor: AppConstant.bluelive,
-                          value: AppService().timeStampToString(
-                              timestamp: appController
-                                  .historyDrugModels[index].timestamp)),
-                    ],
+                itemBuilder: (context, index) => Slidable(
+                  key: const ValueKey(0),
+                  endActionPane:
+                      ActionPane(motion: const ScrollMotion(), children: [
+                    SlidableAction(
+                      onPressed: (context) {},
+                      icon: Icons.delete,
+                      label: 'แก้ไข',
+                      backgroundColor: AppConstant.blue,
+                      foregroundColor: Colors.white,
+                    ),
+                    SlidableAction(
+                      onPressed: (context) {
+                        AppDialog(context: context).normalDialog(
+                            tilte: 'ยืนยันลบ ประวัติการแพ้ย้า',
+                            firstAction: WidgetButton(
+                              label: 'ยืนยัน',
+                              pressFunc: () {
+                                AppService()
+                                    .deleteHistoryDrug(
+                                        docIdHIstoryDrug: appController
+                                            .docIdHistoryDrug[index])
+                                    .then((value) {
+                                  AppService().readHistoryDrug();
+                                  Get.back();
+                                });
+                              },
+                              iconData: Icons.delete,
+                              size: 110,
+                            ));
+                      },
+                      icon: Icons.delete,
+                      label: 'ลบ',
+                      backgroundColor: Colors.red,
+                    ),
+                  ]),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    width: double.infinity,
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: AppConstant().borderBox(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        WidgetTextRich(
+                            title: 'ประวัติการแพ้ยา :',
+                            value: appController
+                                .historyDrugModels[index].historyDrug),
+                        WidgetTextRich(
+                            title: 'วันเดือนปี ที่บันทึก :',
+                            titleColor: AppConstant.bluelive,
+                            value: AppService().timeStampToString(
+                                timestamp: appController
+                                    .historyDrugModels[index].timestamp)),
+                      ],
+                    ),
                   ),
                 ),
               );

@@ -60,7 +60,8 @@ class _HomeUserState extends State<HomeUser> {
                                         WidgetTitle(
                                       title: appController
                                           .userDiseaseModels[index].disease,
-                                      size: 12,color: Colors.white,
+                                      size: 12,
+                                      color: Colors.white,
                                     ),
                                   ),
                           ),
@@ -88,7 +89,8 @@ class _HomeUserState extends State<HomeUser> {
                                         WidgetTitle(
                                       title: appController
                                           .historyDrugModels[index].historyDrug,
-                                      size: 12,color: Colors.white,
+                                      size: 12,
+                                      color: Colors.white,
                                     ),
                                   ),
                           ),
@@ -98,13 +100,32 @@ class _HomeUserState extends State<HomeUser> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(4),
                       height: 150,
                       margin: const EdgeInsets.only(left: 4, right: 8),
                       decoration: AppConstant().borderBox(),
-                      child: const WidgetTitle(
-                        title: 'รายละเอียดความพิการด้านดวงตาและการมองเห็น',
-                        size: 13,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const WidgetTitle(
+                            title: 'รายละเอียดความพิการด้านดวงตาและการมองเห็น',
+                            size: 13,
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              width: double.infinity,
+                              decoration:
+                                  AppConstant().curveBox(context: context),
+                              child: WidgetTitle(
+                                title: appController
+                                    .userModelLogins.last.disibility!,
+                                size: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

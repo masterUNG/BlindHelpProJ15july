@@ -18,6 +18,31 @@ import 'package:path/path.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
+  Future<void> deleteDisease({required String docIdDisease}) async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('disease')
+        .doc(docIdDisease)
+        .delete();
+  }
+
+  Future<void> deleteHistoryDrug({required String docIdHIstoryDrug}) async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('historyDrug')
+        .doc(docIdHIstoryDrug)
+        .delete();
+  }
+
+  Future<void> editUserProfile({required Map<String, dynamic> map}) async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .update(map);
+  }
+
   Future<void> readDisease({String? docIdUserOwnerDisease}) async {
     String docIdUser =
         docIdUserOwnerDisease ?? appController.userModelLogins.last.uid;
@@ -31,11 +56,13 @@ class AppService {
       if (value.docs.isNotEmpty) {
         if (appController.userDiseaseModels.isNotEmpty) {
           appController.userDiseaseModels.clear();
+          appController.docIdDisease.clear();
         }
 
         for (var element in value.docs) {
           DiseaseModel diseaseModel = DiseaseModel.fromMap(element.data());
           appController.userDiseaseModels.add(diseaseModel);
+          appController.docIdDisease.add(element.id);
         }
       }
     });
@@ -54,12 +81,14 @@ class AppService {
       if (value.docs.isNotEmpty) {
         if (appController.historyDrugModels.isNotEmpty) {
           appController.historyDrugModels.clear();
+          appController.docIdHistoryDrug.clear();
         }
 
         for (var element in value.docs) {
           HistoryDrugModel historyDrugModel =
               HistoryDrugModel.fromMap(element.data());
           appController.historyDrugModels.add(historyDrugModel);
+          appController.docIdHistoryDrug.add(element.id);
         }
       }
     });
