@@ -23,7 +23,7 @@ class AppController extends GetxController {
   RxInt indexBody = 0.obs;
   RxList<Timestamp> timestamps = <Timestamp>[].obs;
   RxList<File> files = <File>[].obs;
-  RxList<String> nameFiles= <String>[].obs;
+  RxList<String> nameFiles = <String>[].obs;
   RxList<DiseaseModel> userDiseaseModels = <DiseaseModel>[].obs;
   RxList<HistoryDrugModel> historyDrugModels = <HistoryDrugModel>[].obs;
   RxList<String> docIdDisease = <String>[].obs;
