@@ -38,7 +38,7 @@ class WidgetForm extends StatelessWidget {
       height: maxLine == null ?  40 : null,
       margin:
           EdgeInsets.only(top: marginTop ?? 16, bottom: marginBottom ?? 0.0),
-      child: TextFormField(maxLines: maxLine,
+      child: TextFormField(maxLines: maxLine ?? 1,
         onChanged: changeFunc,
         controller: textEditingController,
         obscureText: obsecu ?? false,
