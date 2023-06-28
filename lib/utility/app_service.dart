@@ -27,6 +27,15 @@ class AppService {
         .doc(docIdDisease)
         .update(map);
   }
+  Future<void> editHistoryDrug(
+      {required String docIdHistoryDrug, required Map<String, dynamic> map}) async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('historyDrug')
+        .doc(docIdHistoryDrug)
+        .update(map);
+  }
 
   Future<void> deleteDisease({required String docIdDisease}) async {
     FirebaseFirestore.instance

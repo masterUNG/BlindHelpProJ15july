@@ -49,15 +49,14 @@ class _DiseaseListState extends State<DiseaseList> {
                       children: <Widget>[
                         SlidableAction(
                           onPressed: (context) {
+
                             TextEditingController textEditingController =
                                 TextEditingController();
                             textEditingController.text =
                                 appController.userDiseaseModels[index].disease;
-
                             bool change = false;
-
                             AppDialog(context: context).normalDialog(
-                                tilte: 'แก้ไข',
+                                tilte: 'แก้ไข โรคประจำตัว',
                                 contentWidget: WidgetForm(
                                   textEditingController: textEditingController,
                                   changeFunc: (p0) {
@@ -89,6 +88,8 @@ class _DiseaseListState extends State<DiseaseList> {
                                       }
                                     },
                                     iconData: Icons.edit));
+
+                                    
                           },
                           icon: Icons.edit,
                           label: 'แก้ไข',
