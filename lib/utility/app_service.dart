@@ -18,6 +18,16 @@ import 'package:path/path.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
+  Future<void> editDisease(
+      {required String docIdDisease, required Map<String, dynamic> map}) async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('disease')
+        .doc(docIdDisease)
+        .update(map);
+  }
+
   Future<void> deleteDisease({required String docIdDisease}) async {
     FirebaseFirestore.instance
         .collection('user')

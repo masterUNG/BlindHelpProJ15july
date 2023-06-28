@@ -117,9 +117,9 @@ class _HomeUserState extends State<HomeUser> {
                               width: double.infinity,
                               decoration:
                                   AppConstant().curveBox(context: context),
-                              child: WidgetTitle(
+                              child: appController.userModelLogins.isEmpty ? const SizedBox() : WidgetTitle(
                                 title: appController
-                                    .userModelLogins.last.disibility!,
+                                    .userModelLogins.last.disibility ?? '-',
                                 size: 12,
                                 color: Colors.white,
                               ),

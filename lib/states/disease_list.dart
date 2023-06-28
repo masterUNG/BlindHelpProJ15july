@@ -48,7 +48,48 @@ class _DiseaseListState extends State<DiseaseList> {
                       extentRatio: 0.5,
                       children: <Widget>[
                         SlidableAction(
-                          onPressed: (context) {},
+                          onPressed: (context) {
+                            TextEditingController textEditingController =
+                                TextEditingController();
+                            textEditingController.text =
+                                appController.userDiseaseModels[index].disease;
+
+                            bool change = false;
+
+                            AppDialog(context: context).normalDialog(
+                                tilte: 'แก้ไข',
+                                contentWidget: WidgetForm(
+                                  textEditingController: textEditingController,
+                                  changeFunc: (p0) {
+                                    change = true;
+                                  },
+                                ),
+                                firstAction: WidgetButton(
+                                    label: 'แก้ไข',
+                                    size: 120,
+                                    pressFunc: () {
+                                      if (change) {
+                                        //edit
+                                        Map<String, dynamic> map = appController
+                                            .userDiseaseModels[index]
+                                            .toMap();
+                                        map['disease'] =
+                                            textEditingController.text;
+                                        AppService()
+                                            .editDisease(
+                                                docIdDisease: appController
+                                                    .docIdDisease[index],
+                                                map: map)
+                                            .then((value) {
+                                          AppService().readDisease();
+                                          Get.back();
+                                        });
+                                      } else {
+                                        Get.back();
+                                      }
+                                    },
+                                    iconData: Icons.edit));
+                          },
                           icon: Icons.edit,
                           label: 'แก้ไข',
                           backgroundColor: AppConstant.blue,

@@ -57,11 +57,10 @@ class _MainUserState extends State<MainUser> {
   void initState() {
     super.initState();
 
-    AppService().readUserModelLogin();
-
-    AppService().readDisease();
-
-    AppService().readHistoryDrug();
+    AppService().readUserModelLogin().then((value) {
+      AppService().readDisease();
+      AppService().readHistoryDrug();
+    });
 
     for (var i = 0; i < titles.length; i++) {
       items.add(
