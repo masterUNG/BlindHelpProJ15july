@@ -1,3 +1,4 @@
+import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_dialog.dart';
 import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_menu.dart';
@@ -14,30 +15,40 @@ class WidgetSignOut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetMemu(
-      leadWidget: const Icon(Icons.exit_to_app),
-      titleWidget: const WidgetText(data: 'ออกจากระบบ'),
-      tapFunc: () {
-        Get.back();
-        AppDialog(context: context).normalDialog(
-          tilte: 'ยืนยันการ SignOut',
-          firstAction: WidgetButton(
-            label: 'SignOut',
-            pressFunc: () async {
-              Get.back();
-              FirebaseAuth.instance.signOut().then((value) async {
-                SharedPreferences preferences =
-                    await SharedPreferences.getInstance();
-                preferences.clear().then((value) {
-                  Get.offAllNamed('/authen');
+    return Container(
+      decoration: BoxDecoration(color: Colors.red.shade700),
+      child: WidgetMemu(
+        leadWidget: const Icon(
+          Icons.exit_to_app,
+          color: Colors.white,
+        ),
+        titleWidget: WidgetText(
+          data: 'ออกจากระบบ',
+          textStyle:
+              AppConstant().titleStyle(context: context, color: Colors.white),
+        ),
+        tapFunc: () {
+          Get.back();
+          AppDialog(context: context).normalDialog(
+            tilte: 'ยืนยันการ SignOut',
+            firstAction: WidgetButton(
+              label: 'SignOut',
+              pressFunc: () async {
+                Get.back();
+                FirebaseAuth.instance.signOut().then((value) async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  preferences.clear().then((value) {
+                    Get.offAllNamed('/authen');
+                  });
                 });
-              });
-            },
-            iconData: Icons.exit_to_app,
-            size: 150,
-          ),
-        );
-      },
+              },
+              iconData: Icons.exit_to_app,
+              size: 130,
+            ),
+          );
+        },
+      ),
     );
   }
 }

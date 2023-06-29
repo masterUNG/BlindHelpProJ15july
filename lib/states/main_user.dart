@@ -5,7 +5,10 @@ import 'package:blindhelp/bodys/read_drug_lable.dart';
 import 'package:blindhelp/states/disease_list.dart';
 import 'package:blindhelp/states/edit_disibility.dart';
 import 'package:blindhelp/states/edit_profile_user.dart';
+import 'package:blindhelp/states/emergency_call.dart';
 import 'package:blindhelp/states/historu_drug_list.dart';
+import 'package:blindhelp/states/hospiatl_page.dart';
+import 'package:blindhelp/states/personal_medication.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_header_drawer.dart';
@@ -84,7 +87,7 @@ class _MainUserState extends State<MainUser> {
               // actions: const [WidgetSignOut()],
             ),
             endDrawer: Drawer(
-              child: Column(
+              child: ListView(
                 children: [
                   const WidgetHeaderDrawer(),
                   WidgetMemu(
@@ -121,7 +124,31 @@ class _MainUserState extends State<MainUser> {
                       Get.to(const EditDisibility());
                     },
                   ),
-                  const Spacer(),
+                  WidgetMemu(
+                    leadWidget: const Icon(Icons.emergency),
+                    titleWidget: const WidgetText(data: 'ยาประจำตัว :'),
+                    tapFunc: () {
+                      Get.back();
+                      Get.to(const PersonanMedication());
+                    },
+                  ),
+                  WidgetMemu(
+                    leadWidget: const Icon(Icons.local_hospital),
+                    titleWidget: const WidgetText(data: 'โรงพยาบาล :'),
+                    tapFunc: () {
+                      Get.back();
+                      Get.to(const HospitalPage());
+                    },
+                  ),
+                  WidgetMemu(
+                    leadWidget: const Icon(Icons.contact_emergency),
+                    titleWidget:
+                        const WidgetText(data: 'ช่องทางติดต่อฉุกเฉิน :'),
+                    tapFunc: () {
+                      Get.back();
+                      Get.to(const EmergencyCall());
+                    },
+                  ),
                   const WidgetSignOut(),
                 ],
               ),
