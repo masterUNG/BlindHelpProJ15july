@@ -136,60 +136,69 @@ class _HomeUserState extends State<HomeUser> {
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                height: 150,
+                height: 150,width: double.infinity,
                 margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 decoration: AppConstant().borderBox(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    const WidgetTitle(
-                      title: 'ยาประจำตัว',
-                      size: 13,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4, horizontal: 8),
-                      decoration: AppConstant().curveBox(context: context),
-                      child: const Row(
-                        children: [
-                          Expanded(
-                            child: WidgetTitle(
-                              title: 'ชื่อยา',
-                              size: 12,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Expanded(
-                            child: WidgetTitle(
-                              title: 'จำนวนครั้งใช้ยา',
-                              size: 12,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    appController.medicieneModels.isEmpty
-                        ? const SizedBox()
-                        :  ListView.builder(
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: appController.medicieneModels.length,
-                    itemBuilder: (context, index) => Row(
+                    Column(crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: WidgetText(
-                              data: appController
-                                  .medicieneModels[index].nameMedicene),
+                        const WidgetTitle(
+                          title: 'ยาประจำตัว',
+                          size: 13,
                         ),
-                        Expanded(
-                          child: WidgetText(
-                              data: appController
-                                  .medicieneModels[index].amountMedicene),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4, horizontal: 8),
+                          decoration: AppConstant().curveBox(context: context),
+                          child: const Row(
+                            children: [
+                              Expanded(
+                                child: WidgetTitle(
+                                  title: 'ชื่อยา',
+                                  size: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Expanded(
+                                child: WidgetTitle(
+                                  title: 'จำนวนครั้งใช้ยา',
+                                  size: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                    appController.medicieneModels.isEmpty
+                        ? const SizedBox()
+                        : Column(mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(height: 80,
+                              child: ListView.builder(
+                                  physics: const ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: appController.medicieneModels.length,
+                                  itemBuilder: (context, index) => Row(
+                                    children: [
+                                      Expanded(
+                                        child: WidgetText(
+                                            data: appController
+                                                .medicieneModels[index].nameMedicene),
+                                      ),
+                                      Expanded(
+                                        child: WidgetText(
+                                            data: appController.medicieneModels[index]
+                                                .amountMedicene),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                            ),
+                          ],
+                        ),
                   ],
                 ),
               ),
@@ -201,7 +210,10 @@ class _HomeUserState extends State<HomeUser> {
                       height: 150,
                       margin: const EdgeInsets.only(left: 8, right: 4),
                       decoration: AppConstant().borderBox(),
-                      child: const Text('data'),
+                      child: const WidgetTitle(
+                        title: 'โรงพยาบาล :',
+                        size: 13,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -210,7 +222,10 @@ class _HomeUserState extends State<HomeUser> {
                       height: 150,
                       margin: const EdgeInsets.only(left: 4, right: 8),
                       decoration: AppConstant().borderBox(),
-                      child: const Text('data'),
+                      child: const WidgetTitle(
+                        title: 'ช่องทางติดต่อฉุกเฉิน : ',
+                        size: 13,
+                      ),
                     ),
                   ),
                 ],
