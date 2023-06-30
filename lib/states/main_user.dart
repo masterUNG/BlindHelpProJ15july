@@ -63,6 +63,7 @@ class _MainUserState extends State<MainUser> {
     AppService().readUserModelLogin().then((value) {
       AppService().readDisease();
       AppService().readHistoryDrug();
+      AppService().readAllMediciene();
     });
 
     for (var i = 0; i < titles.length; i++) {

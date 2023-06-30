@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:blindhelp/models/disease_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
+import 'package:blindhelp/models/medicene_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_constant.dart';
@@ -28,4 +29,6 @@ class AppController extends GetxController {
   RxList<HistoryDrugModel> historyDrugModels = <HistoryDrugModel>[].obs;
   RxList<String> docIdDisease = <String>[].obs;
   RxList<String> docIdHistoryDrug = <String>[].obs;
+
+  RxList<MediceneModel> medicieneModels = <MediceneModel>[].obs;
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:blindhelp/models/disease_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
+import 'package:blindhelp/models/medicene_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_controller.dart';
@@ -27,8 +28,10 @@ class AppService {
         .doc(docIdDisease)
         .update(map);
   }
+
   Future<void> editHistoryDrug(
-      {required String docIdHistoryDrug, required Map<String, dynamic> map}) async {
+      {required String docIdHistoryDrug,
+      required Map<String, dynamic> map}) async {
     FirebaseFirestore.instance
         .collection('user')
         .doc(appController.userModelLogins.last.uid)
@@ -222,6 +225,41 @@ class AppService {
       for (var element in json.decode(value.data)) {
         NameThModel provicneNameThModel = NameThModel.fromMap(element);
         appController.provinceNameThModels.add(provicneNameThModel);
+      }
+    });
+  }
+
+  Future<void> processAddMedicene(
+      {required String nameMedicene, required String amountMedicene}) async {
+    MediceneModel mediceneModel = MediceneModel(
+        nameMedicene: nameMedicene,
+        amountMedicene: amountMedicene,
+        timestamp: Timestamp.fromDate(DateTime.now()));
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('mediciene')
+        .doc()
+        .set(mediceneModel.toMap());
+  }
+
+  Future<void> readAllMediciene() async {
+    if (appController.medicieneModels.isNotEmpty) {
+      appController.medicieneModels.clear();
+    }
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('mediciene').orderBy('timestamp')
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        for (var element in value.docs) {
+          MediceneModel mediceneModel = MediceneModel.fromMap(element.data());
+          appController.medicieneModels.add(mediceneModel);
+        }
       }
     });
   }
