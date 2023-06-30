@@ -24,6 +24,6 @@ class AppConstant {
           center: Alignment.topLeft,
           radius: 1.3));
 
-  BoxDecoration curveBox({required BuildContext context}) =>
-      BoxDecoration(color: AppConstant.blue, borderRadius: BorderRadius.circular(10));
+  BoxDecoration curveBox({required BuildContext context, double? radius}) =>
+      BoxDecoration(color: AppConstant.blue, borderRadius: BorderRadius.circular(radius ?? 10));
 }

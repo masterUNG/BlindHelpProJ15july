@@ -43,6 +43,7 @@ Future<void> main() async {
       initialRoute = '/authen';
       runApp(const MyApp());
     } else {
+      
       FirebaseAuth.instance.authStateChanges().listen((event) async {
         
         if (event == null) {

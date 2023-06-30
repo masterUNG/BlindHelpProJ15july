@@ -46,7 +46,49 @@ class _HistoryDrugListState extends State<HistoryDrugList> {
                   endActionPane:
                       ActionPane(motion: const ScrollMotion(), children: [
                     SlidableAction(
-                      onPressed: (context) {},
+                      onPressed: (context) {
+
+                         TextEditingController textEditingController =
+                                TextEditingController();
+                            textEditingController.text =
+                                appController.historyDrugModels[index].historyDrug;
+                            bool change = false;
+                            AppDialog(context: context).normalDialog(
+                                tilte: 'แก้ไข ประวัติการแพ้ยา',
+                                contentWidget: WidgetForm(
+                                  textEditingController: textEditingController,
+                                  changeFunc: (p0) {
+                                    change = true;
+                                  },
+                                ),
+                                firstAction: WidgetButton(
+                                    label: 'แก้ไข',
+                                    size: 120,
+                                    pressFunc: () {
+                                      if (change) {
+                                        //edit
+                                        Map<String, dynamic> map = appController
+                                            .historyDrugModels[index]
+                                            .toMap();
+                                        map['historyDrug'] =
+                                            textEditingController.text;
+                                        AppService()
+                                            .editHistoryDrug(
+                                                docIdHistoryDrug: appController
+                                                    .docIdHistoryDrug[index],
+                                                map: map)
+                                            .then((value) {
+                                          AppService().readHistoryDrug();
+                                          Get.back();
+                                        });
+                                      } else {
+                                        Get.back();
+                                      }
+                                    },
+                                    iconData: Icons.edit));
+
+
+                      },
                       icon: Icons.delete,
                       label: 'แก้ไข',
                       backgroundColor: AppConstant.blue,
