@@ -8,6 +8,7 @@ import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:blindhelp/widgets/widget_title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class PersonanMedication extends StatefulWidget {
@@ -50,19 +51,101 @@ class _PersonanMedicationState extends State<PersonanMedication> {
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: appController.medicieneModels.length,
-                    itemBuilder: (context, index) => Row(
-                      children: [
-                        Expanded(
-                          child: WidgetText(
-                              data: appController
-                                  .medicieneModels[index].nameMedicene),
+                    itemBuilder: (context, index) => Slidable(
+                      key: const ValueKey(0),
+                      endActionPane: ActionPane(
+                          motion: const ScrollMotion(),
+                          extentRatio: 0.5,
+                          children: <Widget>[
+                            SlidableAction(
+                              onPressed: (context) {
+                                TextEditingController nameController =
+                                    TextEditingController();
+                                nameController.text = appController
+                                    .medicieneModels[index].nameMedicene;
+                                TextEditingController amountController =
+                                    TextEditingController();
+                                amountController.text = appController
+                                    .medicieneModels[index].amountMedicene;
+
+                                AppDialog(context: context).normalDialog(
+                                    tilte: 'แก้ไข ยาประจำตัว',
+                                    contentWidget: Column(
+                                      children: [
+                                        WidgetForm(
+                                          textEditingController: nameController,
+                                        ),
+                                        WidgetForm(
+                                          textEditingController:
+                                              amountController,
+                                        ),
+                                      ],
+                                    ),
+                                    firstAction: WidgetButton(
+                                      label: 'แก้ไข',
+                                      pressFunc: () {},
+                                      iconData: Icons.edit,
+                                      size: 110,
+                                    ));
+                              },
+                              icon: Icons.edit,
+                              label: 'แก้ไข',
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.blue,
+                            ),
+                            SlidableAction(
+                              onPressed: (context) {
+                                AppDialog(context: context).normalDialog(
+                                    tilte: 'ลบยาประจำตัว',
+                                    contentWidget: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        WidgetText(
+                                            data:
+                                                'ต้องการลบ ${appController.medicieneModels[index].nameMedicene} ?'),
+                                      ],
+                                    ),
+                                    firstAction: WidgetButton(
+                                      label: 'ลบ',
+                                      pressFunc: () {
+                                        AppService()
+                                            .deleteMediciene(
+                                                docIdMediciene: appController
+                                                    .docIdMedicienes[index])
+                                            .then((value) {
+                                          AppService()
+                                              .readAllMediciene()
+                                              .then((value) => Get.back());
+                                        });
+                                      },
+                                      iconData: Icons.delete,
+                                      size: 100,
+                                    ));
+                              },
+                              icon: Icons.delete,
+                              label: 'ลบ',
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.red,
+                            ),
+                          ]),
+                      child: SizedBox(
+                        height: 50,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: WidgetText(
+                                  data: appController
+                                      .medicieneModels[index].nameMedicene),
+                            ),
+                            Expanded(
+                              child: WidgetText(
+                                  data: appController
+                                      .medicieneModels[index].amountMedicene),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: WidgetText(
-                              data: appController
-                                  .medicieneModels[index].amountMedicene),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],

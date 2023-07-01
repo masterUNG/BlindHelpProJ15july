@@ -29,6 +29,7 @@ class AppController extends GetxController {
   RxList<HistoryDrugModel> historyDrugModels = <HistoryDrugModel>[].obs;
   RxList<String> docIdDisease = <String>[].obs;
   RxList<String> docIdHistoryDrug = <String>[].obs;
+  RxList<String> docIdMedicienes = <String>[].obs;
 
   RxList<MediceneModel> medicieneModels = <MediceneModel>[].obs;
 }
