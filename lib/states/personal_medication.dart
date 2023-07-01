@@ -45,30 +45,7 @@ class _PersonanMedicationState extends State<PersonanMedication> {
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    decoration:
-                        AppConstant().curveBox(context: context, radius: 0),
-                    child: const Row(
-                      children: [
-                        Expanded(
-                          child: WidgetTitle(
-                            title: 'ชื่อยา',
-                            size: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Expanded(
-                          child: WidgetTitle(
-                            title: 'จำนวนครั้งใช้ยา',
-                            size: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  displayHead(),
                   ListView.builder(
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
@@ -92,6 +69,31 @@ class _PersonanMedicationState extends State<PersonanMedication> {
               ),
             );
     });
+  }
+
+  Container displayHead() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      decoration: AppConstant().curveBox(context: context, radius: 0),
+      child: const Row(
+        children: [
+          Expanded(
+            child: WidgetTitle(
+              title: 'ชื่อยา',
+              size: 12,
+              color: Colors.white,
+            ),
+          ),
+          Expanded(
+            child: WidgetTitle(
+              title: 'จำนวนครั้งใช้ยา',
+              size: 12,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   WidgetButton addMedication(BuildContext context) {
