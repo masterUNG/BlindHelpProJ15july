@@ -7,7 +7,9 @@ import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:blindhelp/widgets/widget_title.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class PersonanMedication extends StatefulWidget {
@@ -45,53 +47,170 @@ class _PersonanMedicationState extends State<PersonanMedication> {
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    decoration:
-                        AppConstant().curveBox(context: context, radius: 0),
-                    child: const Row(
-                      children: [
-                        Expanded(
-                          child: WidgetTitle(
-                            title: 'ชื่อยา',
-                            size: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Expanded(
-                          child: WidgetTitle(
-                            title: 'จำนวนครั้งใช้ยา',
-                            size: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  displayHead(),
                   ListView.builder(
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: appController.medicieneModels.length,
-                    itemBuilder: (context, index) => Row(
-                      children: [
-                        Expanded(
-                          child: WidgetText(
-                              data: appController
-                                  .medicieneModels[index].nameMedicene),
+                    itemBuilder: (context, index) => Slidable(
+                      key: const ValueKey(0),
+                      endActionPane: ActionPane(
+                          motion: const ScrollMotion(),
+                          extentRatio: 0.5,
+                          children: <Widget>[
+                            SlidableAction(
+                              onPressed: (context) {
+                                bool change = false;
+
+                                TextEditingController nameController =
+                                    TextEditingController();
+                                nameController.text = appController
+                                    .medicieneModels[index].nameMedicene;
+                                TextEditingController amountController =
+                                    TextEditingController();
+                                amountController.text = appController
+                                    .medicieneModels[index].amountMedicene;
+
+                                AppDialog(context: context).normalDialog(
+                                    tilte: 'แก้ไข ยาประจำตัว',
+                                    contentWidget: Column(
+                                      children: [
+                                        WidgetForm(
+                                          textEditingController: nameController,
+                                          changeFunc: (p0) {
+                                            change = true;
+                                          },
+                                        ),
+                                        WidgetForm(
+                                          textEditingController:
+                                              amountController,
+                                          changeFunc: (p0) {
+                                            change = true;
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    firstAction: WidgetButton(
+                                      label: 'แก้ไข',
+                                      pressFunc: () async {
+                                        await processEdit(index, nameController,
+                                            amountController, change);
+                                      },
+                                      iconData: Icons.edit,
+                                      size: 110,
+                                    ));
+                              },
+                              icon: Icons.edit,
+                              label: 'แก้ไข',
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.blue,
+                            ),
+                            SlidableAction(
+                              onPressed: (context) {
+                                AppDialog(context: context).normalDialog(
+                                    tilte: 'ลบยาประจำตัว',
+                                    contentWidget: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        WidgetText(
+                                            data:
+                                                'ต้องการลบ ${appController.medicieneModels[index].nameMedicene} ?'),
+                                      ],
+                                    ),
+                                    firstAction: WidgetButton(
+                                      label: 'ลบ',
+                                      pressFunc: () {
+                                        AppService()
+                                            .deleteMediciene(
+                                                docIdMediciene: appController
+                                                    .docIdMedicienes[index])
+                                            .then((value) {
+                                          AppService()
+                                              .readAllMediciene()
+                                              .then((value) => Get.back());
+                                        });
+                                      },
+                                      iconData: Icons.delete,
+                                      size: 100,
+                                    ));
+                              },
+                              icon: Icons.delete,
+                              label: 'ลบ',
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.red,
+                            ),
+                          ]),
+                      child: SizedBox(
+                        height: 50,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: WidgetText(
+                                  data: appController
+                                      .medicieneModels[index].nameMedicene),
+                            ),
+                            Expanded(
+                              child: WidgetText(
+                                  data: appController
+                                      .medicieneModels[index].amountMedicene),
+                            ),
+                          ],
                         ),
-                        Expanded(
-                          child: WidgetText(
-                              data: appController
-                                  .medicieneModels[index].amountMedicene),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
               ),
             );
     });
+  }
+
+  Future<void> processEdit(int index, TextEditingController nameController,
+      TextEditingController amountController, bool change) async {
+    Map<String, dynamic> map = appController.medicieneModels[index].toMap();
+    map['nameMedicene'] = nameController.text;
+    map['amountMedicene'] = amountController.text;
+
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('mediciene')
+        .doc(appController.docIdMedicienes[index])
+        .update(map)
+        .then((value) {
+      AppService().readAllMediciene().then((value) => Get.back());
+    });
+
+    if (change) {
+    } else {
+      Get.back();
+    }
+  }
+
+  Container displayHead() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      decoration: AppConstant().curveBox(context: context, radius: 0),
+      child: const Row(
+        children: [
+          Expanded(
+            child: WidgetTitle(
+              title: 'ชื่อยา',
+              size: 12,
+              color: Colors.white,
+            ),
+          ),
+          Expanded(
+            child: WidgetTitle(
+              title: 'จำนวนครั้งใช้ยา',
+              size: 12,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   WidgetButton addMedication(BuildContext context) {

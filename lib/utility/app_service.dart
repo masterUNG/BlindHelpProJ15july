@@ -58,6 +58,15 @@ class AppService {
         .delete();
   }
 
+  Future<void> deleteMediciene({required String docIdMediciene}) async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('mediciene')
+        .doc(docIdMediciene)
+        .delete();
+  }
+
   Future<void> editUserProfile({required Map<String, dynamic> map}) async {
     FirebaseFirestore.instance
         .collection('user')
@@ -252,13 +261,20 @@ class AppService {
     FirebaseFirestore.instance
         .collection('user')
         .doc(appController.userModelLogins.last.uid)
-        .collection('mediciene').orderBy('timestamp')
+        .collection('mediciene')
+        .orderBy('timestamp')
         .get()
         .then((value) {
+      if (appController.medicieneModels.isNotEmpty) {
+        appController.medicieneModels.clear();
+        appController.docIdMedicienes.clear();
+      }
+
       if (value.docs.isNotEmpty) {
         for (var element in value.docs) {
           MediceneModel mediceneModel = MediceneModel.fromMap(element.data());
           appController.medicieneModels.add(mediceneModel);
+          appController.docIdMedicienes.add(element.id);
         }
       }
     });
