@@ -7,6 +7,7 @@ import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:blindhelp/widgets/widget_title.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
@@ -59,6 +60,8 @@ class _PersonanMedicationState extends State<PersonanMedication> {
                           children: <Widget>[
                             SlidableAction(
                               onPressed: (context) {
+                                bool change = false;
+
                                 TextEditingController nameController =
                                     TextEditingController();
                                 nameController.text = appController
@@ -74,16 +77,25 @@ class _PersonanMedicationState extends State<PersonanMedication> {
                                       children: [
                                         WidgetForm(
                                           textEditingController: nameController,
+                                          changeFunc: (p0) {
+                                            change = true;
+                                          },
                                         ),
                                         WidgetForm(
                                           textEditingController:
                                               amountController,
+                                          changeFunc: (p0) {
+                                            change = true;
+                                          },
                                         ),
                                       ],
                                     ),
                                     firstAction: WidgetButton(
                                       label: 'แก้ไข',
-                                      pressFunc: () {},
+                                      pressFunc: () async {
+                                        await processEdit(index, nameController,
+                                            amountController, change);
+                                      },
                                       iconData: Icons.edit,
                                       size: 110,
                                     ));
@@ -152,6 +164,28 @@ class _PersonanMedicationState extends State<PersonanMedication> {
               ),
             );
     });
+  }
+
+  Future<void> processEdit(int index, TextEditingController nameController,
+      TextEditingController amountController, bool change) async {
+    Map<String, dynamic> map = appController.medicieneModels[index].toMap();
+    map['nameMedicene'] = nameController.text;
+    map['amountMedicene'] = amountController.text;
+
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('mediciene')
+        .doc(appController.docIdMedicienes[index])
+        .update(map)
+        .then((value) {
+      AppService().readAllMediciene().then((value) => Get.back());
+    });
+
+    if (change) {
+    } else {
+      Get.back();
+    }
   }
 
   Container displayHead() {
