@@ -119,13 +119,17 @@ class _HomeUserState extends State<HomeUser> {
                                   AppConstant().curveBox(context: context),
                               child: appController.userModelLogins.isEmpty
                                   ? const SizedBox()
-                                  : WidgetTitle(
-                                      title: appController.userModelLogins.last
-                                              .disibility ??
-                                          '-',
-                                      size: 12,
-                                      color: Colors.white,
-                                    ),
+                                  : ListView(
+                                    children: [
+                                      WidgetTitle(
+                                          title: appController.userModelLogins.last
+                                                  .disibility ??
+                                              '-',
+                                          size: 12,
+                                          color: Colors.white,
+                                        ),
+                                    ],
+                                  ),
                             ),
                           ),
                         ],
