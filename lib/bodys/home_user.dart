@@ -3,7 +3,9 @@ import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_circle_image.dart';
 import 'package:blindhelp/widgets/widget_circle_image_network.dart';
+import 'package:blindhelp/widgets/widget_map.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
+import 'package:blindhelp/widgets/widget_text_rich.dart';
 import 'package:blindhelp/widgets/widget_title.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -119,12 +121,16 @@ class _HomeUserState extends State<HomeUser> {
                                   AppConstant().curveBox(context: context),
                               child: appController.userModelLogins.isEmpty
                                   ? const SizedBox()
-                                  : WidgetTitle(
-                                      title: appController.userModelLogins.last
-                                              .disibility ??
-                                          '-',
-                                      size: 12,
-                                      color: Colors.white,
+                                  : ListView(
+                                      children: [
+                                        WidgetTitle(
+                                          title: appController.userModelLogins
+                                                  .last.disibility ??
+                                              '-',
+                                          size: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ],
                                     ),
                             ),
                           ),
@@ -136,12 +142,14 @@ class _HomeUserState extends State<HomeUser> {
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                height: 150,width: double.infinity,
+                height: 150,
+                width: double.infinity,
                 margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 decoration: AppConstant().borderBox(),
                 child: Stack(
                   children: [
-                    Column(crossAxisAlignment: CrossAxisAlignment.start,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const WidgetTitle(
                           title: 'ยาประจำตัว',
@@ -174,31 +182,36 @@ class _HomeUserState extends State<HomeUser> {
                     ),
                     appController.medicieneModels.isEmpty
                         ? const SizedBox()
-                        : Column(mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SizedBox(height: 80,
-                              child: ListView.builder(
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                height: 80,
+                                child: ListView.builder(
                                   physics: const ScrollPhysics(),
                                   shrinkWrap: true,
-                                  itemCount: appController.medicieneModels.length,
+                                  itemCount:
+                                      appController.medicieneModels.length,
                                   itemBuilder: (context, index) => Row(
                                     children: [
                                       Expanded(
                                         child: WidgetText(
                                             data: appController
-                                                .medicieneModels[index].nameMedicene),
+                                                .medicieneModels[index]
+                                                .nameMedicene),
                                       ),
                                       Expanded(
                                         child: WidgetText(
-                                            data: appController.medicieneModels[index]
+                                            data: appController
+                                                .medicieneModels[index]
                                                 .amountMedicene),
                                       ),
                                     ],
                                   ),
                                 ),
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
                   ],
                 ),
               ),
@@ -207,19 +220,37 @@ class _HomeUserState extends State<HomeUser> {
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      height: 150,
+                      height: 200,
                       margin: const EdgeInsets.only(left: 8, right: 4),
                       decoration: AppConstant().borderBox(),
-                      child: const WidgetTitle(
-                        title: 'โรงพยาบาล :',
-                        size: 13,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 100,
+                            width: double.infinity,
+                            decoration: AppConstant().borderBox(),
+                            child: const WidgetMap(),
+                          ),
+                          const WidgetTitle(
+                            title:
+                                'โรงพยาบาลศูนย์การแพทย์มหาวิทยาลัยแม่ฟ้าหลวง',
+                            size: 13,
+                          ),
+                          WidgetTextRich(
+                            title: 'เบอร์ติดต่อ :',
+                            titleStyle: Theme.of(context).textTheme.bodySmall,
+                            value: ' 095-674-4565',
+                            valueStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.blue),
+                          )
+                        ],
                       ),
                     ),
                   ),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.all(8),
-                      height: 150,
+                      height: 200,
                       margin: const EdgeInsets.only(left: 4, right: 8),
                       decoration: AppConstant().borderBox(),
                       child: const WidgetTitle(

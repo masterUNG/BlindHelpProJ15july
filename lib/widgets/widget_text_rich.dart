@@ -9,20 +9,24 @@ class WidgetTextRich extends StatelessWidget {
     required this.title,
     required this.value,
     this.titleColor,
+    this.titleStyle,
+    this.valueStyle,
   }) : super(key: key);
 
   final String title;
   final String value;
   final Color? titleColor;
+  final TextStyle? titleStyle;
+  final TextStyle? valueStyle;
 
   @override
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
         text: title,
-        style: AppConstant().titleStyle(context: context, color: titleColor),
+        style: titleStyle ?? AppConstant().titleStyle(context: context, color: titleColor),
         children: [
-          TextSpan(text: value, style: Theme.of(context).textTheme.bodyMedium)
+          TextSpan(text: value, style: valueStyle ?? Theme.of(context).textTheme.bodyMedium)
         ],
       ),
     );
