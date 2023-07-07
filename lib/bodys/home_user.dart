@@ -5,6 +5,7 @@ import 'package:blindhelp/widgets/widget_circle_image.dart';
 import 'package:blindhelp/widgets/widget_circle_image_network.dart';
 import 'package:blindhelp/widgets/widget_map.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
+import 'package:blindhelp/widgets/widget_text_rich.dart';
 import 'package:blindhelp/widgets/widget_title.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -225,15 +226,23 @@ class _HomeUserState extends State<HomeUser> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                         
-                          Container(height: 100,width: double.infinity,
+                          Container(
+                            height: 100,
+                            width: double.infinity,
                             decoration: AppConstant().borderBox(),
-                            child: WidgetMap(),
+                            child: const WidgetMap(),
                           ),
-                           const WidgetTitle(
-                            title: 'โรงพยาบาลศูนย์การแพทย์มหาวิทยาลัยแม่ฟ้าหลวง',
+                          const WidgetTitle(
+                            title:
+                                'โรงพยาบาลศูนย์การแพทย์มหาวิทยาลัยแม่ฟ้าหลวง',
                             size: 13,
                           ),
+                          WidgetTextRich(
+                            title: 'เบอร์ติดต่อ :',
+                            titleStyle: Theme.of(context).textTheme.bodySmall,
+                            value: ' 095-674-4565',
+                            valueStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.blue),
+                          )
                         ],
                       ),
                     ),
