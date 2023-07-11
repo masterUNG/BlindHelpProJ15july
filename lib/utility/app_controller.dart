@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:blindhelp/models/chat_model.dart';
 import 'package:blindhelp/models/disease_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
 import 'package:blindhelp/models/medicene_model.dart';
@@ -30,6 +31,7 @@ class AppController extends GetxController {
   RxList<String> docIdDisease = <String>[].obs;
   RxList<String> docIdHistoryDrug = <String>[].obs;
   RxList<String> docIdMedicienes = <String>[].obs;
-
   RxList<MediceneModel> medicieneModels = <MediceneModel>[].obs;
+
+  RxList<ChatModel> chatModels = <ChatModel>[].obs;
 }
