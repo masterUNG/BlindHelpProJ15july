@@ -66,11 +66,11 @@ class _HelpUserState extends State<HelpUser> {
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: SizedBox(
             width: boxConstraints.maxWidth,
-            height: boxConstraints.maxWidth - 60,
+            height: boxConstraints.maxHeight-60 ,
             child: Obx(() {
               return appController.chatModels.isEmpty
                   ? const SizedBox()
-                  : ListView.builder(reverse: true,
+                  : ListView.builder(reverse: false,
                       itemCount: appController.chatModels.length,
                       itemBuilder: (context, index) => BubbleSpecialThree(
                         text: appController.chatModels[index].message,
