@@ -49,7 +49,6 @@ class _DiseaseListState extends State<DiseaseList> {
                       children: <Widget>[
                         SlidableAction(
                           onPressed: (context) {
-
                             TextEditingController textEditingController =
                                 TextEditingController();
                             textEditingController.text =
@@ -88,8 +87,6 @@ class _DiseaseListState extends State<DiseaseList> {
                                       }
                                     },
                                     iconData: Icons.edit));
-
-                                    
                           },
                           icon: Icons.edit,
                           label: 'แก้ไข',
