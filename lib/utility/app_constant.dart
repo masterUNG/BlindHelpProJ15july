@@ -10,8 +10,8 @@ class AppConstant {
     'อาสาสมัครสาธารณะสุขประจำหมู่บ้าน(อสม.)',
   ];
 
-  TextStyle titleStyle({required BuildContext context, Color? color}) =>
-      Theme.of(context).textTheme.titleMedium!.copyWith(
+  TextStyle titleStyle({required BuildContext context, Color? color, double? fontSize}) =>
+      Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: fontSize,
           color: color ?? Theme.of(context).primaryColor,
           fontWeight: FontWeight.w700);
 
