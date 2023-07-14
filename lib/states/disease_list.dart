@@ -2,7 +2,6 @@
 import 'package:blindhelp/widgets/widget_edit_delete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 import 'package:blindhelp/models/disease_model.dart';
@@ -14,7 +13,6 @@ import 'package:blindhelp/utility/app_snackbar.dart';
 import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
-import 'package:blindhelp/widgets/widget_text_button.dart';
 import 'package:blindhelp/widgets/widget_text_rich.dart';
 
 class DiseaseList extends StatefulWidget {
@@ -45,64 +43,39 @@ class _DiseaseListState extends State<DiseaseList> {
             ? const SizedBox()
             : ListView.builder(
                 itemCount: appController.userDiseaseModels.length,
-                itemBuilder: (context, index) => Slidable(
-                  key: const ValueKey(0),
-                  endActionPane: ActionPane(
-                      motion: const ScrollMotion(),
-                      extentRatio: 0.5,
-                      children: <Widget>[
-                        SlidableAction(
-                          onPressed: (context) {
-                            processEdit(index, context);
-                          },
-                          icon: Icons.edit,
-                          label: 'แก้ไข',
-                          backgroundColor: AppConstant.blue,
-                          foregroundColor: Colors.white,
-                        ),
-                        SlidableAction(
-                          onPressed: (context) {
-                            processDelete(context, index);
-                          },
-                          icon: Icons.delete,
-                          label: 'ลบ',
-                          backgroundColor: Colors.red,
-                        ),
-                      ]),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(8),
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: AppConstant().borderBox(),
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            WidgetTextRich(
-                                title: 'โรค : ',
-                                value: appController
-                                    .userDiseaseModels[index].disease),
-                            WidgetTextRich(
-                                title: 'วันเดือนปี ที่บันทึก :',
-                                titleColor: AppConstant.bluelive,
-                                value: AppService().timeStampToString(
-                                    timestamp: appController
-                                        .userDiseaseModels[index].timestamp)),
-                          ],
-                        ),
-                        const Spacer(),
-                        WidgetEditDelete(
-                          editFunc: () {
-                            processEdit(index, context);
-                          },
-                          deleteFunc: () {
-                            processDelete(context, index);
-                          },
-                        ),
-                      ],
-                    ),
+                itemBuilder: (context, index) => Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(8),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: AppConstant().borderBox(),
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          WidgetTextRich(
+                              title: 'โรค : ',
+                              value: appController
+                                  .userDiseaseModels[index].disease),
+                          WidgetTextRich(
+                              title: 'วันเดือนปี ที่บันทึก :',
+                              titleColor: AppConstant.bluelive,
+                              value: AppService().timeStampToString(
+                                  timestamp: appController
+                                      .userDiseaseModels[index].timestamp)),
+                        ],
+                      ),
+                      const Spacer(),
+                      WidgetEditDelete(
+                        editFunc: () {
+                          processEdit(index, context);
+                        },
+                        deleteFunc: () {
+                          processDelete(context, index);
+                        },
+                      ),
+                    ],
                   ),
                 ),
               );

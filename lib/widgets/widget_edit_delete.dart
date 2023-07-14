@@ -21,14 +21,14 @@ class WidgetEditDelete extends StatelessWidget {
           child: Container(
             width: 48,
             padding: const EdgeInsets.all(4),
-            decoration: AppConstant().borderBox(),
+            decoration: AppConstant().borderBox(bgColor: Colors.blue),
             child:  const Column(
               children: [
                 Icon(
-                  Icons.edit,
+                  Icons.edit,color: Colors.white,
                   size: 18,
                 ),
-                WidgetText(data: 'แก้ไข'),
+                WidgetText(data: 'แก้ไข', textStyle: TextStyle(color: Colors.white),),
               ],
             ),
           ),
@@ -41,14 +41,14 @@ class WidgetEditDelete extends StatelessWidget {
           child: Container(
             width: 48,
             padding: const EdgeInsets.all(4),
-            decoration: AppConstant().borderBox(),
+            decoration: AppConstant().borderBox(bgColor: Colors.red.shade700),
             child: const Column(
               children: [
                 Icon(
-                  Icons.delete,
+                  Icons.delete,color: Colors.white,
                   size: 18,
                 ),
-                WidgetText(data: 'ลบ'),
+                WidgetText(data: 'ลบ', textStyle: TextStyle(color: Colors.white),),
               ],
             ),
           ),
