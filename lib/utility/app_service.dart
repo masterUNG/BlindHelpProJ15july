@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:blindhelp/models/disease_model.dart';
+import 'package:blindhelp/models/drug_label_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
 import 'package:blindhelp/models/medicene_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
@@ -168,6 +169,11 @@ class AppService {
   }
 
   Future<void> takePhoto({required ImageSource imageSource}) async {
+    if (appController.files.isNotEmpty) {
+      appController.files.clear();
+      appController.nameFiles.clear();
+    }
+
     var result = await ImagePicker()
         .pickImage(source: imageSource, maxWidth: 800, maxHeight: 800);
 
@@ -284,6 +290,27 @@ class AppService {
           MediceneModel mediceneModel = MediceneModel.fromMap(element.data());
           appController.medicieneModels.add(mediceneModel);
           appController.docIdMedicienes.add(element.id);
+        }
+      }
+    });
+  }
+
+  Future<void> readDrugLableByUid() async {
+    if (appController.drugLabelModels.isNotEmpty) {
+      appController.drugLabelModels.clear();
+    }
+
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('druglabel')
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        for (var element in value.docs) {
+          DrugLabelModel drugLabelModel =
+              DrugLabelModel.fromMap(element.data());
+          appController.drugLabelModels.add(drugLabelModel);
         }
       }
     });

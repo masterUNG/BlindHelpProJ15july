@@ -10,7 +10,6 @@ import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:blindhelp/widgets/widget_title.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 
 class PersonanMedication extends StatefulWidget {
