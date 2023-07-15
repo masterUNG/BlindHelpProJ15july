@@ -1,11 +1,122 @@
+import 'package:blindhelp/models/drug_label_model.dart';
+import 'package:blindhelp/utility/app_constant.dart';
+import 'package:blindhelp/utility/app_controller.dart';
+import 'package:blindhelp/utility/app_dialog.dart';
+import 'package:blindhelp/utility/app_service.dart';
+import 'package:blindhelp/widgets/widget_button.dart';
+import 'package:blindhelp/widgets/widget_image_network.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
+import 'package:blindhelp/widgets/widget_text_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ReadDrugLabel extends StatelessWidget {
+class ReadDrugLabel extends StatefulWidget {
   const ReadDrugLabel({super.key});
 
   @override
+  State<ReadDrugLabel> createState() => _ReadDrugLabelState();
+}
+
+class _ReadDrugLabelState extends State<ReadDrugLabel> {
+  AppController appController = Get.put(AppController());
+
+  @override
+  void initState() {
+    super.initState();
+    AppService().readDrugLableByUid();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const WidgetText(data: 'ReadDrugLabel');
+    return Scaffold(
+      body: LayoutBuilder(builder: (context, BoxConstraints boxConstraints) {
+        return Obx(() {
+          return appController.drugLabelModels.isEmpty
+              ? const SizedBox()
+              : ListView.builder(
+                  itemCount: appController.drugLabelModels.length,
+                  itemBuilder: (context, index) => Container(
+                    margin: const EdgeInsets.only(right: 4, left: 4, bottom: 4),
+                    decoration: AppConstant().borderBox(),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          width: boxConstraints.maxWidth * 0.5,
+                          height: boxConstraints.maxWidth * 0.4,
+                          child: WidgetImageNewwork(
+                            url: appController.drugLabelModels[index].urlLabel,
+                            boxFit: BoxFit.cover,
+                          ),
+                        ),
+                        Container(
+                          width: boxConstraints.maxWidth * 0.5 - 10,
+                          height: boxConstraints.maxWidth * 0.4,
+                          child: WidgetText(
+                              data: appController
+                                  .drugLabelModels[index].textLabel),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+        });
+      }),
+      floatingActionButton: WidgetButton(
+          size: 160,
+          label: 'เพิ่มฉลากยา',
+          pressFunc: () {
+            AppDialog(context: context).normalDialog(
+              tilte: 'เพิ่มฉลากยา',
+              contentWidget: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  WidgetText(data: 'โปรดเลือกวีธี การเพิ่มฉลากยา'),
+                ],
+              ),
+              firstAction: WidgetTextButton(
+                label: 'Camera',
+                pressFunc: () {
+                  Get.back();
+                  processTakePhotoUpdateInsert(imageSource: ImageSource.camera);
+                },
+              ),
+              secondAction: WidgetTextButton(
+                label: 'Gallery',
+                pressFunc: () {
+                  Get.back();
+                  processTakePhotoUpdateInsert(
+                      imageSource: ImageSource.gallery);
+                },
+              ),
+            );
+          },
+          iconData: Icons.add_box),
+    );
+  }
+
+  Future<void> processTakePhotoUpdateInsert(
+      {required ImageSource imageSource}) async {
+    AppService().takePhoto(imageSource: imageSource).then((value) async {
+      String? urlImage = await AppService().uploadImage(path: 'druglabel');
+      if (urlImage != null) {
+        DrugLabelModel drugLabelModel = DrugLabelModel(
+            urlLabel: urlImage,
+            textLabel: '',
+            timestamp: Timestamp.fromDate(DateTime.now()),
+            mapUserModel: appController.userModelLogins.last.toMap(),
+            mapHelperModel: {});
+
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(appController.userModelLogins.last.uid)
+            .collection('druglabel')
+            .doc()
+            .set(drugLabelModel.toMap())
+            .then((value) => AppService().readDrugLableByUid());
+      }
+    });
   }
 }
