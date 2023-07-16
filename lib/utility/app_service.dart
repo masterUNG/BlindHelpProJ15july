@@ -315,4 +315,43 @@ class AppService {
       }
     });
   }
+
+  Future<void> readAllDrugLabel() async {
+    if (appController.drugLabelModels.isNotEmpty) {
+      appController.drugLabelModels.clear();
+      appController.docIdDrugLabels.clear();
+    }
+
+    FirebaseFirestore.instance.collection('user').get().then((value) {
+      for (var element in value.docs) {
+        FirebaseFirestore.instance
+            .collection('user')
+            .doc(element.id)
+            .collection('druglabel')
+            .get()
+            .then((value) {
+          if (value.docs.isNotEmpty) {
+            for (var element in value.docs) {
+              DrugLabelModel drugLabelModel =
+                  DrugLabelModel.fromMap(element.data());
+              appController.drugLabelModels.add(drugLabelModel);
+              appController.docIdDrugLabels.add(element.id);
+            }
+          }
+        });
+      }
+    });
+  }
+
+  Future<void> editDrugLabel(
+      {required Map<String, dynamic> map,
+      required String docIdUser,
+      required String docIdDrugLabel}) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(docIdUser)
+        .collection('druglabel')
+        .doc(docIdDrugLabel)
+        .update(map);
+  }
 }

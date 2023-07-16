@@ -36,4 +36,5 @@ class AppController extends GetxController {
   RxList<ChatModel> chatModels = <ChatModel>[].obs;
 
   RxList<DrugLabelModel> drugLabelModels = <DrugLabelModel>[].obs;
+  RxList<String> docIdDrugLabels = <String>[].obs;
 }
