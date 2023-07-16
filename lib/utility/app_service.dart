@@ -319,6 +319,7 @@ class AppService {
   Future<void> readAllDrugLabel() async {
     if (appController.drugLabelModels.isNotEmpty) {
       appController.drugLabelModels.clear();
+      appController.docIdDrugLabels.clear();
     }
 
     FirebaseFirestore.instance.collection('user').get().then((value) {
@@ -334,10 +335,23 @@ class AppService {
               DrugLabelModel drugLabelModel =
                   DrugLabelModel.fromMap(element.data());
               appController.drugLabelModels.add(drugLabelModel);
+              appController.docIdDrugLabels.add(element.id);
             }
           }
         });
       }
     });
+  }
+
+  Future<void> editDrugLabel(
+      {required Map<String, dynamic> map,
+      required String docIdUser,
+      required String docIdDrugLabel}) async {
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(docIdUser)
+        .collection('druglabel')
+        .doc(docIdDrugLabel)
+        .update(map);
   }
 }

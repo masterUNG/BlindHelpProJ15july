@@ -51,7 +51,7 @@ class _ReadDrugLabelState extends State<ReadDrugLabel> {
                             boxFit: BoxFit.cover,
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           width: boxConstraints.maxWidth * 0.5 - 10,
                           height: boxConstraints.maxWidth * 0.4,
                           child: WidgetText(

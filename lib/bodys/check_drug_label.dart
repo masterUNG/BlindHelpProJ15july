@@ -3,7 +3,6 @@ import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_dialog.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_button.dart';
-import 'package:blindhelp/widgets/widget_edit_delete.dart';
 import 'package:blindhelp/widgets/widget_form.dart';
 import 'package:blindhelp/widgets/widget_image_network.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
@@ -87,6 +86,27 @@ class _CheckDrugLabelState extends State<CheckDrugLabel> {
                                                       .toMap();
                                               map['textLabel'] =
                                                   textEditingController.text;
+                                              map['mapHelperModel'] =
+                                                  appController
+                                                      .userModelLogins.last
+                                                      .toMap();
+
+                                              AppService()
+                                                  .editDrugLabel(
+                                                      docIdDrugLabel: appController
+                                                              .docIdDrugLabels[
+                                                          index],
+                                                      docIdUser: appController
+                                                          .drugLabelModels[
+                                                              index]
+                                                          .mapUserModel['uid'],
+                                                      map: map)
+                                                  .then((value) {
+                                                AppService()
+                                                    .readAllDrugLabel()
+                                                    .then(
+                                                        (value) => Get.back());
+                                              });
                                             }
                                             Get.back();
                                           },

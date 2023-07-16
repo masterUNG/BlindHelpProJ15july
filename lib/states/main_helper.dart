@@ -2,9 +2,9 @@
 
 import 'package:blindhelp/bodys/check_drug_label.dart';
 import 'package:blindhelp/bodys/help_helper.dart';
+import 'package:blindhelp/bodys/help_user.dart';
 import 'package:blindhelp/bodys/home_helper.dart';
 import 'package:blindhelp/bodys/update_article.dart';
-import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_header_drawer.dart';
@@ -25,6 +25,7 @@ class _MainHelperState extends State<MainHelper> {
     const HomeHelper(),
     const CheckDrugLabel(),
     const HelpHelper(),
+    // const HelpUser(),
     const UpdateArticle(),
   ];
 

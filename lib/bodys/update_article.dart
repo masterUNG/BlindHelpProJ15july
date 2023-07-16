@@ -6,6 +6,6 @@ class UpdateArticle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetText(data: 'Update Atrigle');
+    return const WidgetText(data: 'Update Atrigle');
   }
 }

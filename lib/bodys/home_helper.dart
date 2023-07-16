@@ -6,6 +6,6 @@ class HomeHelper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetText(data: 'Home Helper');
+    return const WidgetText(data: 'Home Helper');
   }
 }
