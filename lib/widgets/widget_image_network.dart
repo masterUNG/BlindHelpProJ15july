@@ -6,13 +6,20 @@ class WidgetImageNewwork extends StatelessWidget {
     Key? key,
     required this.url,
     this.boxFit,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   final String url;
   final BoxFit? boxFit;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(url, fit: boxFit,);
+    return Image.network(
+      url,
+      fit: boxFit,width: width,height: height,
+    );
   }
 }
