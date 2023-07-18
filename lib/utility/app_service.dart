@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:blindhelp/models/chat_model.dart';
 import 'package:blindhelp/models/disease_model.dart';
 import 'package:blindhelp/models/drug_label_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
 import 'package:blindhelp/models/medicene_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
 import 'package:blindhelp/models/user_model.dart';
+import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -20,7 +22,8 @@ import 'package:path/path.dart';
 class AppService {
   AppController appController = Get.put(AppController());
 
-  Future<void> addChat({required Map<String, dynamic> map, String? docIdUser}) async {
+  Future<void> addChat(
+      {required Map<String, dynamic> map, String? docIdUser}) async {
     await FirebaseFirestore.instance
         .collection('user')
         .doc(docIdUser ?? appController.userModelLogins.last.uid)
@@ -353,5 +356,41 @@ class AppService {
         .collection('druglabel')
         .doc(docIdDrugLabel)
         .update(map);
+  }
+
+  Future<void> readUser() async {
+    if (appController.userModelHelper.isNotEmpty) {
+      appController.userModelHelper.clear();
+      appController.lastMessages.clear();
+    }
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .where('typeUser', isEqualTo: AppConstant.typeUsers[0])
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        UserModel userModel = UserModel.fromMap(element.data());
+        appController.userModelHelper.add(userModel);
+
+        FirebaseFirestore.instance
+            .collection('user')
+            .doc(element.id)
+            .collection('chat')
+            .orderBy('timestamp')
+            .get()
+            .then((value) {
+          if (value.docs.isNotEmpty) {
+            ChatModel? chatModel;
+            for (var element in value.docs) {
+              chatModel = ChatModel.fromMap(element.data());
+            }
+            appController.lastMessages.add(chatModel?.message ?? '');
+          } else {
+            appController.lastMessages.add('');
+          }
+        });
+      }
+    });
   }
 }

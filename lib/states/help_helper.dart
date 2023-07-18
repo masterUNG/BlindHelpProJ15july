@@ -1,18 +1,27 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:blindhelp/models/chat_model.dart';
-import 'package:blindhelp/utility/app_constant.dart';
-import 'package:blindhelp/utility/app_controller.dart';
-import 'package:blindhelp/utility/app_service.dart';
-import 'package:blindhelp/widgets/widget_button.dart';
-import 'package:blindhelp/widgets/widget_form.dart';
+import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:blindhelp/models/chat_model.dart';
+import 'package:blindhelp/models/user_model.dart';
+import 'package:blindhelp/utility/app_constant.dart';
+import 'package:blindhelp/utility/app_controller.dart';
+import 'package:blindhelp/utility/app_service.dart';
+import 'package:blindhelp/widgets/widget_button.dart';
+import 'package:blindhelp/widgets/widget_form.dart';
+
 class HelpHelper extends StatefulWidget {
-  const HelpHelper({super.key});
+  const HelpHelper({
+    Key? key,
+    required this.userModel,
+  }) : super(key: key);
+
+  final UserModel userModel;
 
   @override
   State<HelpHelper> createState() => _HelpHelperState();
@@ -40,8 +49,9 @@ class _HelpHelperState extends State<HelpHelper> {
   void readChat() {
     streamSubscription = FirebaseFirestore.instance
         .collection('user')
-        .doc(AppConstant.docIdUser)
-        .collection('chat').orderBy('timestamp')
+        .doc(widget.userModel.uid)
+        .collection('chat')
+        .orderBy('timestamp')
         .snapshots()
         .listen((event) {
       if (appController.chatModels.isNotEmpty) {
@@ -60,16 +70,18 @@ class _HelpHelperState extends State<HelpHelper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: WidgetText(data: widget.userModel.name),),
       body: LayoutBuilder(builder: (context, BoxConstraints boxConstraints) {
         return GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: SizedBox(
             width: boxConstraints.maxWidth,
-            height: boxConstraints.maxHeight-60 ,
+            height: boxConstraints.maxHeight - 60,
             child: Obx(() {
               return appController.chatModels.isEmpty
                   ? const SizedBox()
-                  : ListView.builder(reverse: false,
+                  : ListView.builder(
+                      reverse: false,
                       itemCount: appController.chatModels.length,
                       itemBuilder: (context, index) => BubbleSpecialThree(
                         text: appController.chatModels[index].message,
@@ -110,7 +122,8 @@ class _HelpHelperState extends State<HelpHelper> {
                     timestamp: Timestamp.fromDate(DateTime.now()));
 
                 AppService()
-                    .addChat(map: chatModel.toMap(), docIdUser: AppConstant.docIdUser)
+                    .addChat(
+                        map: chatModel.toMap(), docIdUser: widget.userModel.uid)
                     .then((value) => textEditingController.text = '');
               },
               iconData: Icons.send,

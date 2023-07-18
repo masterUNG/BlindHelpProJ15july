@@ -23,6 +23,9 @@ class AppController extends GetxController {
   RxBool remember = false.obs;
   RxString uidLogin = ''.obs;
   RxList<UserModel> userModelLogins = <UserModel>[].obs;
+  RxList<UserModel> userModelHelper = <UserModel>[].obs;
+  RxList<String> lastMessages = <String>[].obs;
+
   RxInt indexBody = 0.obs;
   RxList<Timestamp> timestamps = <Timestamp>[].obs;
   RxList<File> files = <File>[].obs;
@@ -34,7 +37,6 @@ class AppController extends GetxController {
   RxList<String> docIdMedicienes = <String>[].obs;
   RxList<MediceneModel> medicieneModels = <MediceneModel>[].obs;
   RxList<ChatModel> chatModels = <ChatModel>[].obs;
-
   RxList<DrugLabelModel> drugLabelModels = <DrugLabelModel>[].obs;
   RxList<String> docIdDrugLabels = <String>[].obs;
 }
