@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:blindhelp/bodys/check_drug_label.dart';
-import 'package:blindhelp/bodys/help_helper.dart';
-import 'package:blindhelp/bodys/help_user.dart';
+import 'package:blindhelp/bodys/list_user_help.dart';
 import 'package:blindhelp/bodys/home_helper.dart';
 import 'package:blindhelp/bodys/update_article.dart';
 import 'package:blindhelp/utility/app_controller.dart';
@@ -24,8 +23,7 @@ class _MainHelperState extends State<MainHelper> {
   var bodys = <Widget>[
     const HomeHelper(),
     const CheckDrugLabel(),
-    const HelpHelper(),
-    // const HelpUser(),
+    const ListUserHelp(),
     const UpdateArticle(),
   ];
 
