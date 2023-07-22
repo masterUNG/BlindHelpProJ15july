@@ -47,6 +47,7 @@ class _MainHelperState extends State<MainHelper> {
   void initState() {
     super.initState();
     AppService().readUserModelLogin();
+    AppService().readUser();
 
     for (var i = 0; i < titles.length; i++) {
       items.add(
@@ -86,6 +87,7 @@ class _MainHelperState extends State<MainHelper> {
               type: BottomNavigationBarType.fixed,
               onTap: (value) {
                 appController.indexBody.value = value;
+                // appController.load.value = true;
               },
             ),
           );

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:blindhelp/models/chat_model.dart';
+import 'package:blindhelp/models/check_home_user.dart';
 import 'package:blindhelp/models/disease_model.dart';
 import 'package:blindhelp/models/drug_label_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
@@ -359,16 +360,16 @@ class AppService {
   }
 
   Future<void> readUser() async {
-    if (appController.userModelHelper.isNotEmpty) {
-      appController.userModelHelper.clear();
-      appController.lastMessages.clear();
-    }
-
     FirebaseFirestore.instance
         .collection('user')
         .where('typeUser', isEqualTo: AppConstant.typeUsers[0])
         .get()
         .then((value) {
+      if (appController.userModelHelper.isNotEmpty) {
+        appController.userModelHelper.clear();
+        appController.lastMessages.clear();
+      }
+
       for (var element in value.docs) {
         UserModel userModel = UserModel.fromMap(element.data());
         appController.userModelHelper.add(userModel);
@@ -390,6 +391,27 @@ class AppService {
             appController.lastMessages.add('');
           }
         });
+      }
+    });
+  }
+
+  Future<void> readCheckHome() async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('checkhome')
+        .orderBy('recordTimestamp')
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        if (appController.checkHomeUsers.isNotEmpty) {
+          appController.checkHomeUsers.clear();
+        }
+
+        for (var element in value.docs) {
+          CheckHomeUser checkHomeUser = CheckHomeUser.fromMap(element.data());
+          appController.checkHomeUsers.add(checkHomeUser);
+        }
       }
     });
   }

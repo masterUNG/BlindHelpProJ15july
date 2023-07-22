@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:blindhelp/models/chat_model.dart';
+import 'package:blindhelp/models/check_home_user.dart';
 import 'package:blindhelp/models/disease_model.dart';
 import 'package:blindhelp/models/drug_label_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
@@ -21,6 +22,7 @@ class AppController extends GetxController {
   RxList<NameThModel?> chooseDistriceModels = <NameThModel?>[null].obs;
   RxBool accept = false.obs;
   RxBool remember = false.obs;
+  RxBool load = true.obs;
   RxString uidLogin = ''.obs;
   RxList<UserModel> userModelLogins = <UserModel>[].obs;
   RxList<UserModel> userModelHelper = <UserModel>[].obs;
@@ -39,4 +41,5 @@ class AppController extends GetxController {
   RxList<ChatModel> chatModels = <ChatModel>[].obs;
   RxList<DrugLabelModel> drugLabelModels = <DrugLabelModel>[].obs;
   RxList<String> docIdDrugLabels = <String>[].obs;
+  RxList<CheckHomeUser> checkHomeUsers = <CheckHomeUser>[].obs;
 }

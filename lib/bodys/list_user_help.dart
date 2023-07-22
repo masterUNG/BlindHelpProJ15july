@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:blindhelp/states/help_helper.dart';
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
@@ -20,14 +22,17 @@ class _ListUserHelpState extends State<ListUserHelp> {
   @override
   void initState() {
     super.initState();
-    AppService().readUser();
+    AppService().readUser().then((value) {
+       appController.load.value = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       print('lastmessage ---> ${appController.lastMessages.length}');
-      return (appController.userModelHelper.isEmpty) || (appController.lastMessages.isEmpty)
+      return (appController.load.value || appController.userModelHelper.isEmpty) ||
+              (appController.lastMessages.isEmpty)
           ? const SizedBox()
           : GridView.builder(
               itemCount: appController.userModelHelper.length,
@@ -64,7 +69,7 @@ class _ListUserHelpState extends State<ListUserHelp> {
                         data: appController.lastMessages[index],
                         textStyle: AppConstant().titleStyle(
                             context: context, fontSize: 10, color: Colors.grey),
-                      )
+                      ),
                     ],
                   ),
                 ),
