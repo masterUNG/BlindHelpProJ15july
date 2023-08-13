@@ -1,5 +1,6 @@
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
+import 'package:blindhelp/widgets/widget_text_rich.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,8 @@ class _NotiHelperState extends State<NotiHelper> {
           body: appController.userModelLogins.isEmpty ? const SizedBox() : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              WidgetText(data: 'สวัสดี  ชืออาสาสมัคร'),
+              WidgetTextRich(title: 'สวัสดี', value: '  ${appController.userModelLogins.last.name} ${appController.userModelLogins.last.surName}'),
+              
               WidgetText(data: 'กล่องข้อความขอความช่วยเหลือล่าสุด 0 คน'),
               WidgetText(data: 'รูปถ่ายฉลากยาล่าสุด 0 รายการ'),
               WidgetText(data: 'บทความใหม่จำนวน 0 บทความ'),
