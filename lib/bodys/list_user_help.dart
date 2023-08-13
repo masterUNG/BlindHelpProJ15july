@@ -65,7 +65,7 @@ class _ListUserHelpState extends State<ListUserHelp> {
                         data: appController.userModelHelper[index].name,
                         textStyle: AppConstant().titleStyle(context: context),
                       ),
-                      WidgetText(
+                      appController.lastMessages.isEmpty ? const SizedBox() : WidgetText(
                         data: appController.lastMessages[index],
                         textStyle: AppConstant().titleStyle(
                             context: context, fontSize: 10, color: Colors.grey),

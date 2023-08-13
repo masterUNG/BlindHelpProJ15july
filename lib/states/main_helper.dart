@@ -4,9 +4,13 @@ import 'package:blindhelp/bodys/check_drug_label.dart';
 import 'package:blindhelp/bodys/list_user_help.dart';
 import 'package:blindhelp/bodys/home_helper.dart';
 import 'package:blindhelp/bodys/update_article.dart';
+import 'package:blindhelp/states/edit_info_helper.dart';
+import 'package:blindhelp/states/info_helper.dart';
+import 'package:blindhelp/states/noti_helper.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_header_drawer.dart';
+import 'package:blindhelp/widgets/widget_menu.dart';
 import 'package:blindhelp/widgets/widget_signout.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +25,8 @@ class MainHelper extends StatefulWidget {
 
 class _MainHelperState extends State<MainHelper> {
   var bodys = <Widget>[
-    const HomeHelper(),
+    // const HomeHelper(),
+    const NotiHelper(),
     const CheckDrugLabel(),
     const ListUserHelp(),
     const UpdateArticle(),
@@ -68,12 +73,28 @@ class _MainHelperState extends State<MainHelper> {
             appBar: AppBar(
               title: WidgetText(data: titles[appController.indexBody.value]),
             ),
-            endDrawer: const Drawer(
+            endDrawer: Drawer(
               child: Column(
                 children: [
-                  WidgetHeaderDrawer(),
-                  Spacer(),
-                  WidgetSignOut(),
+                  const WidgetHeaderDrawer(),
+                  WidgetMemu(
+                    leadWidget: const Icon(Icons.details),
+                    titleWidget: const WidgetText(data: 'ข้อมูลส่วนตัว'),
+                    tapFunc: () {
+                      Get.back();
+                      Get.to(const InfoHelper());
+                    },
+                  ),
+                  WidgetMemu(
+                    leadWidget: const Icon(Icons.edit),
+                    titleWidget: const WidgetText(data: 'แก้ไขข้อมูลส่วนตัว'),
+                    tapFunc: () {
+                      Get.back();
+                      Get.to(const EditInfoHelper());
+                    },
+                  ),
+                  const Spacer(),
+                  const WidgetSignOut(),
                 ],
               ),
             ),

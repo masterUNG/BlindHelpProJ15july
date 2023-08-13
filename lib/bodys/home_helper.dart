@@ -36,7 +36,7 @@ class _HomeHelperState extends State<HomeHelper> {
                 data: 'รายการผู้ป่วยที่ตรวจเยี่ยมบ้าน',
                 textStyle: AppConstant().titleStyle(context: context),
               ),
-              Divider(color: Colors.black),
+              const Divider(color: Colors.black),
               Obx(() {
                 return appController.checkHomeUsers.isEmpty
                     ? const SizedBox()
