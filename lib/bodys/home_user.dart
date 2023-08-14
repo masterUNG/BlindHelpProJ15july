@@ -3,6 +3,7 @@ import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_circle_image.dart';
 import 'package:blindhelp/widgets/widget_circle_image_network.dart';
+import 'package:blindhelp/widgets/widget_emergency_call.dart';
 import 'package:blindhelp/widgets/widget_map.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
 import 'package:blindhelp/widgets/widget_text_rich.dart';
@@ -253,9 +254,14 @@ class _HomeUserState extends State<HomeUser> {
                       height: 200,
                       margin: const EdgeInsets.only(left: 4, right: 8),
                       decoration: AppConstant().borderBox(),
-                      child: const WidgetTitle(
-                        title: 'ช่องทางติดต่อฉุกเฉิน : ',
-                        size: 13,
+                      child: const Column(
+                        children: [
+                          WidgetTitle(
+                            title: 'ช่องทางติดต่อฉุกเฉิน : ',
+                            size: 13,
+                          ),
+                          WidgetEmergencyCall(),
+                        ],
                       ),
                     ),
                   ),

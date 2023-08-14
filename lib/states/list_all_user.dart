@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:blindhelp/models/check_home_user.dart';
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';

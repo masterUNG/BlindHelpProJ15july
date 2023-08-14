@@ -11,6 +11,7 @@ class WidgetButton extends StatelessWidget {
     required this.iconData,
     this.size,
     this.colorIcon,
+    this.color,
   }) : super(key: key);
 
   final String label;
@@ -18,6 +19,7 @@ class WidgetButton extends StatelessWidget {
   final IconData iconData;
   final double? size;
   final Color? colorIcon;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class WidgetButton extends StatelessWidget {
               .copyWith(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: color ?? Theme.of(context).primaryColor,
           foregroundColor: Colors.white,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:blindhelp/models/article_model.dart';
 import 'package:blindhelp/models/chat_model.dart';
 import 'package:blindhelp/models/check_home_user.dart';
 import 'package:blindhelp/models/disease_model.dart';
@@ -302,6 +303,7 @@ class AppService {
   Future<void> readDrugLableByUid() async {
     if (appController.drugLabelModels.isNotEmpty) {
       appController.drugLabelModels.clear();
+      appController.docIdDrugLabels.clear();
     }
 
     await FirebaseFirestore.instance
@@ -315,6 +317,7 @@ class AppService {
           DrugLabelModel drugLabelModel =
               DrugLabelModel.fromMap(element.data());
           appController.drugLabelModels.add(drugLabelModel);
+          appController.docIdDrugLabels.add(element.id);
         }
       }
     });
@@ -411,6 +414,51 @@ class AppService {
         for (var element in value.docs) {
           CheckHomeUser checkHomeUser = CheckHomeUser.fromMap(element.data());
           appController.checkHomeUsers.add(checkHomeUser);
+        }
+      }
+    });
+  }
+
+  Future<void> deleteDrugLabel({required String docIdDrugLabel}) async {
+    print('docIdDrugLabel ---> $docIdDrugLabel');
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('druglabel')
+        .doc(docIdDrugLabel)
+        .delete()
+        .then((value) {
+      print('deleta success');
+    });
+  }
+
+  Future<void> addNewArticle({required String article}) async {
+    ArticleModel articleModel = ArticleModel(
+        article: article, timestamp: Timestamp.fromDate(DateTime.now()));
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('article')
+        .doc()
+        .set(articleModel.toMap());
+  }
+
+  Future<void> readMyArticle() async {
+    if (appController.articleModels.isNotEmpty) {
+      appController.articleModels.clear();
+    }
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('article').orderBy('timestamp')
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        for (var element in value.docs) {
+          ArticleModel articleModel = ArticleModel.fromMap(element.data());
+          appController.articleModels.add(articleModel);
         }
       }
     });

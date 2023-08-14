@@ -54,9 +54,51 @@ class _ReadDrugLabelState extends State<ReadDrugLabel> {
                         SizedBox(
                           width: boxConstraints.maxWidth * 0.5 - 10,
                           height: boxConstraints.maxWidth * 0.4,
-                          child: WidgetText(
-                              data: appController
-                                  .drugLabelModels[index].textLabel),
+                          child: Stack(
+                            children: [
+                              WidgetText(
+                                  data: appController
+                                      .drugLabelModels[index].textLabel),
+                              Positioned(
+                                bottom: 4,
+                                right: 4,
+                                child: WidgetButton(
+                                    size: 130,
+                                    label: 'ลบฉลาก',
+                                    pressFunc: () {
+                                      AppDialog(context: context).normalDialog(
+                                          tilte: 'ลบฉลาก',
+                                          iconWidget: WidgetImageNewwork(
+                                              url: appController
+                                                  .drugLabelModels[index]
+                                                  .urlLabel),
+                                          firstAction: WidgetButton(
+                                              size: 130,
+                                              color: Colors.red,
+                                              label: 'ลบฉาก',
+                                              pressFunc: () {
+                                                print(
+                                                    'docIdDrug ---> ${appController.docIdDrugLabels[index]}');
+
+                                                AppService()
+                                                    .deleteDrugLabel(
+                                                        docIdDrugLabel:
+                                                            appController
+                                                                    .docIdDrugLabels[
+                                                                index])
+                                                    .then((value) {
+                                                  Get.back();
+                                                  AppService()
+                                                      .readDrugLableByUid();
+                                                });
+                                              },
+                                              iconData: Icons.delete_forever));
+                                    },
+                                    color: Colors.red,
+                                    iconData: Icons.delete_forever),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),

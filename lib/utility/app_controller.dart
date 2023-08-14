@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:blindhelp/models/article_model.dart';
 import 'package:blindhelp/models/chat_model.dart';
 import 'package:blindhelp/models/check_home_user.dart';
 import 'package:blindhelp/models/disease_model.dart';
@@ -27,7 +28,6 @@ class AppController extends GetxController {
   RxList<UserModel> userModelLogins = <UserModel>[].obs;
   RxList<UserModel> userModelHelper = <UserModel>[].obs;
   RxList<String> lastMessages = <String>[].obs;
-
   RxInt indexBody = 0.obs;
   RxList<Timestamp> timestamps = <Timestamp>[].obs;
   RxList<File> files = <File>[].obs;
@@ -42,4 +42,6 @@ class AppController extends GetxController {
   RxList<DrugLabelModel> drugLabelModels = <DrugLabelModel>[].obs;
   RxList<String> docIdDrugLabels = <String>[].obs;
   RxList<CheckHomeUser> checkHomeUsers = <CheckHomeUser>[].obs;
+
+  RxList<ArticleModel> articleModels = <ArticleModel>[].obs;
 }
