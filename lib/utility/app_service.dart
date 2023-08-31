@@ -433,9 +433,21 @@ class AppService {
     });
   }
 
-  Future<void> addNewArticle({required String article}) async {
+  Future<void> addNewArticle({
+    required String article,
+    required String title,
+  }) async {
+    String? urlImage;
+
+    if (appController.files.isNotEmpty) {
+      urlImage = await uploadImage(path: 'article');
+    }
+
     ArticleModel articleModel = ArticleModel(
-        article: article, timestamp: Timestamp.fromDate(DateTime.now()));
+        article: article,
+        timestamp: Timestamp.fromDate(DateTime.now()),
+        title: title,
+        urlImage: urlImage ?? '');
     FirebaseFirestore.instance
         .collection('user')
         .doc(appController.userModelLogins.last.uid)
@@ -452,7 +464,8 @@ class AppService {
     FirebaseFirestore.instance
         .collection('user')
         .doc(appController.userModelLogins.last.uid)
-        .collection('article').orderBy('timestamp')
+        .collection('article')
+        .orderBy('timestamp')
         .get()
         .then((value) {
       if (value.docs.isNotEmpty) {
