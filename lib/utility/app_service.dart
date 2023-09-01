@@ -183,8 +183,12 @@ class AppService {
         .pickImage(source: imageSource, maxWidth: 800, maxHeight: 800);
 
     if (result != null) {
+      String string = basename(result.path);
+      var strings = string.split('.');
+
+
       appController.files.add(File(result.path));
-      appController.nameFiles.add(basename(result.path));
+      appController.nameFiles.add('${strings.first}.jpg');
     }
   }
 
@@ -433,9 +437,31 @@ class AppService {
     });
   }
 
-  Future<void> addNewArticle({required String article}) async {
+  Future<void> processEditArticle(
+      {required Map<String, dynamic> map, required String docIdArticle}) async {
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc(appController.userModelLogins.last.uid)
+        .collection('article')
+        .doc(docIdArticle)
+        .update(map);
+  }
+
+  Future<void> addNewArticle({
+    required String article,
+    required String title,
+  }) async {
+    String? urlImage;
+
+    if (appController.files.isNotEmpty) {
+      urlImage = await uploadImage(path: 'article');
+    }
+
     ArticleModel articleModel = ArticleModel(
-        article: article, timestamp: Timestamp.fromDate(DateTime.now()));
+        article: article,
+        timestamp: Timestamp.fromDate(DateTime.now()),
+        title: title,
+        urlImage: urlImage ?? '');
     FirebaseFirestore.instance
         .collection('user')
         .doc(appController.userModelLogins.last.uid)
@@ -447,18 +473,21 @@ class AppService {
   Future<void> readMyArticle() async {
     if (appController.articleModels.isNotEmpty) {
       appController.articleModels.clear();
+      appController.docIdArticles.clear();
     }
 
     FirebaseFirestore.instance
         .collection('user')
         .doc(appController.userModelLogins.last.uid)
-        .collection('article').orderBy('timestamp')
+        .collection('article')
+        .orderBy('timestamp', descending: true)
         .get()
         .then((value) {
       if (value.docs.isNotEmpty) {
         for (var element in value.docs) {
           ArticleModel articleModel = ArticleModel.fromMap(element.data());
           appController.articleModels.add(articleModel);
+          appController.docIdArticles.add(element.id);
         }
       }
     });

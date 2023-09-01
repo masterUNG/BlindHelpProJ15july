@@ -2,7 +2,6 @@
 
 import 'package:blindhelp/bodys/check_drug_label.dart';
 import 'package:blindhelp/bodys/list_user_help.dart';
-import 'package:blindhelp/bodys/home_helper.dart';
 import 'package:blindhelp/bodys/update_article.dart';
 import 'package:blindhelp/states/edit_info_helper.dart';
 import 'package:blindhelp/states/info_helper.dart';
