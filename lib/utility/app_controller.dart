@@ -44,4 +44,5 @@ class AppController extends GetxController {
   RxList<CheckHomeUser> checkHomeUsers = <CheckHomeUser>[].obs;
 
   RxList<ArticleModel> articleModels = <ArticleModel>[].obs;
+  RxList<String> docIdArticles = <String>[].obs;
 }

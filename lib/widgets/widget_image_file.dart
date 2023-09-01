@@ -7,12 +7,21 @@ class WidgetImageFile extends StatelessWidget {
   const WidgetImageFile({
     Key? key,
     required this.file,
+    this.size,
+    this.boxFit,
   }) : super(key: key);
 
   final File file;
+  final double? size;
+  final BoxFit? boxFit;
 
   @override
   Widget build(BuildContext context) {
-    return Image.file(file);
+    return Image.file(
+      file,
+      width: size,
+      height: size,
+      fit: boxFit,
+    );
   }
 }

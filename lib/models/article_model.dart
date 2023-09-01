@@ -29,7 +29,7 @@ class ArticleModel {
     return ArticleModel(
       article: (map['article'] ?? '') as String,
       timestamp: (map['timestamp']?? Timestamp(0, 0)),
-      title: (map['title'] ?? '') as String,
+      title: (map['title'] ?? 'ยังไม่มีชื่อ') as String,
       urlImage: (map['urlImage'] ?? '') as String,
     );
   }
