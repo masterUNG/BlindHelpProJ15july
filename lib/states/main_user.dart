@@ -5,7 +5,7 @@ import 'package:blindhelp/bodys/read_drug_lable.dart';
 import 'package:blindhelp/states/disease_list.dart';
 import 'package:blindhelp/states/edit_disibility.dart';
 import 'package:blindhelp/states/edit_profile_user.dart';
-import 'package:blindhelp/states/emergency_call.dart';
+import 'package:blindhelp/states/read_article.dart';
 import 'package:blindhelp/states/historu_drug_list.dart';
 import 'package:blindhelp/states/hospiatl_page.dart';
 import 'package:blindhelp/states/personal_medication.dart';
@@ -134,11 +134,11 @@ class _MainUserState extends State<MainUser> {
                     },
                   ),
                   WidgetMemu(
-                    leadWidget: const Icon(Icons.local_hospital),
-                    titleWidget: const WidgetText(data: 'โรงพยาบาล :'),
+                    leadWidget: const Icon(Icons.article),
+                    titleWidget: const WidgetText(data: 'บทความสุขภาพ :'),
                     tapFunc: () {
                       Get.back();
-                      Get.to(const HospitalPage());
+                      Get.to(const ReadArticle());
                     },
                   ),
                   WidgetMemu(
@@ -147,7 +147,7 @@ class _MainUserState extends State<MainUser> {
                         const WidgetText(data: 'ช่องทางติดต่อฉุกเฉิน :'),
                     tapFunc: () {
                       Get.back();
-                      Get.to(const EmergencyCall());
+                      
                     },
                   ),
                   const WidgetSignOut(),
