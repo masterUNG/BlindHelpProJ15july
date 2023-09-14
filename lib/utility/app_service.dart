@@ -186,7 +186,6 @@ class AppService {
       String string = basename(result.path);
       var strings = string.split('.');
 
-
       appController.files.add(File(result.path));
       appController.nameFiles.add('${strings.first}.jpg');
     }
@@ -489,6 +488,30 @@ class AppService {
           appController.articleModels.add(articleModel);
           appController.docIdArticles.add(element.id);
         }
+      }
+    });
+  }
+
+  Future<void> readAllArticle() async {
+    FirebaseFirestore.instance.collection('user').get().then((value) {
+      if (appController.articleModels.isNotEmpty) {
+        appController.articleModels.clear();
+      }
+
+      for (var element in value.docs) {
+        FirebaseFirestore.instance
+            .collection('user')
+            .doc(element.id)
+            .collection('article')
+            .get()
+            .then((value) {
+          if (value.docs.isNotEmpty) {
+            for (var element in value.docs) {
+              ArticleModel articleModel = ArticleModel.fromMap(element.data());
+              appController.articleModels.add(articleModel);
+            }
+          }
+        });
       }
     });
   }
