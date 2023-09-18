@@ -7,7 +7,6 @@ import 'package:blindhelp/states/edit_disibility.dart';
 import 'package:blindhelp/states/edit_profile_user.dart';
 import 'package:blindhelp/states/read_article.dart';
 import 'package:blindhelp/states/historu_drug_list.dart';
-import 'package:blindhelp/states/hospiatl_page.dart';
 import 'package:blindhelp/states/personal_medication.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
@@ -28,7 +27,7 @@ class MainUser extends StatefulWidget {
 class _MainUserState extends State<MainUser> {
   var titles = <String>[
     'หน้าแรก',
-    'โทรฉุกเฉิน',
+    'บทความ',
     'อ่านฉลากยา',
     'ช่วยเหลือ',
   ];
@@ -42,14 +41,14 @@ class _MainUserState extends State<MainUser> {
 
   var bodys = <Widget>[
     const HomeUser(),
-    const EmergencyUser(),
+    const ReadArticle(),
     const ReadDrugLabel(),
     const HelpUser(),
   ];
 
   var icons = <IconData>[
     Icons.home,
-    Icons.phone,
+    Icons.article,
     Icons.menu_book,
     Icons.live_help,
   ];
@@ -133,14 +132,14 @@ class _MainUserState extends State<MainUser> {
                       Get.to(const PersonanMedication());
                     },
                   ),
-                  WidgetMemu(
-                    leadWidget: const Icon(Icons.article),
-                    titleWidget: const WidgetText(data: 'บทความสุขภาพ :'),
-                    tapFunc: () {
-                      Get.back();
-                      Get.to(const ReadArticle());
-                    },
-                  ),
+                  // WidgetMemu(
+                  //   leadWidget: const Icon(Icons.article),
+                  //   titleWidget: const WidgetText(data: 'บทความสุขภาพ :'),
+                  //   tapFunc: () {
+                  //     Get.back();
+                  //     Get.to(const ReadArticle());
+                  //   },
+                  // ),
                   WidgetMemu(
                     leadWidget: const Icon(Icons.contact_emergency),
                     titleWidget:

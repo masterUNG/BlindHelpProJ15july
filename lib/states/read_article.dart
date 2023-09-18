@@ -23,9 +23,9 @@ class _ReadArticleState extends State<ReadArticle> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const WidgetText(data: 'บทความสุขภาพ'),
-      ),
+      // appBar: AppBar(
+      //   title: const WidgetText(data: 'บทความสุขภาพ'),
+      // ),
       body: GetX(
         init: AppController(),
         builder: (controller) => controller.articleModels.isEmpty
