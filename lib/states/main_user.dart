@@ -34,7 +34,7 @@ class _MainUserState extends State<MainUser> {
 
   var appBarTitles = <String>[
     'ข้อมูลสุขภาพ',
-    'ติดต่อโรงพยาบาล',
+    'บทความ',
     'อ่านฉลากยา',
     'ความช่วยเหลือ',
   ];
