@@ -41,7 +41,7 @@ class _ReadArticleState extends State<ReadArticle> {
                     margin:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                     padding: const EdgeInsets.all(8),
-                    decoration: AppConstant().borderBox(),
+                    // decoration: AppConstant().borderBox(),
                     child:
                         WidgetText(data: controller.articleModels[index].title),
                   ),

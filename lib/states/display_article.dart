@@ -29,8 +29,10 @@ class DisplayArticle extends StatelessWidget {
               ? const SizedBox()
               : WidgetImageNewwork(url: articleModel.urlImage),
           const WidgetTitle(title: 'เนื้อหา'),
-          Container(margin: const EdgeInsets.symmetric(vertical: 16),padding: const EdgeInsets.all(8),
-            decoration: AppConstant().borderBox(),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 16),
+            padding: const EdgeInsets.all(8),
+            // decoration: AppConstant().borderBox(),
             child: WidgetTitle(title: articleModel.article),
           ),
         ],
