@@ -28,7 +28,7 @@ class _WidgetHeaderDrawerState extends State<WidgetHeaderDrawer> {
             .copyWith(color: Colors.white),
       ),
       accountEmail:
-          WidgetText(data: appController.userModelLogins.last.typeUser),
+          WidgetText(data: appController.userModelLogins.last.typeUser == AppConstant.typeUsers[1] ? 'อาสาสมัคร' :  appController.userModelLogins.last.typeUser),
           currentAccountPicture: const WidgetImageAsset(),
           currentAccountPictureSize: const Size.square(60),
           decoration: AppConstant().gradientBox(context: context),

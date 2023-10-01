@@ -77,7 +77,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                         const SizedBox(
                           height: 16,
                         ),
-                        WidgetTitle(title: appController.typeUser.value),
+                         WidgetTitle(title:  appController.typeUser.value == AppConstant.typeUsers[1] ? 'อาสาสมัคร' : appController.typeUser.value ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -86,7 +86,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                   data: appController.typeUser.value ==
                                           AppConstant.typeUsers[0]
                                       ? 'โรงพยาบาลที่รักษาประจำ'
-                                      : 'พื้นที่ดูแล'),
+                                      : 'พื้นที่สะดวกช่วยเหลือ'),
                               textEditingController: spcialController,
                             ),
                           ],
@@ -493,7 +493,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
               onChanged: (value) {
                 appController.typeUser.value = value.toString();
               },
-              title: WidgetText(data: AppConstant.typeUsers[1]),
+              title: const WidgetText(data: 'อาสาสมัคร'),
             )
           ],
         ));

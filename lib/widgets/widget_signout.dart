@@ -3,6 +3,7 @@ import 'package:blindhelp/utility/app_dialog.dart';
 import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_menu.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
+import 'package:blindhelp/widgets/widget_text_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,7 @@ class WidgetSignOut extends StatelessWidget {
           Get.back();
           AppDialog(context: context).normalDialog(
             tilte: 'ยืนยันการ SignOut',
-            firstAction: WidgetButton(
+            firstAction: WidgetTextButton(
               label: 'SignOut',
               pressFunc: () async {
                 Get.back();
@@ -43,8 +44,8 @@ class WidgetSignOut extends StatelessWidget {
                   });
                 });
               },
-              iconData: Icons.exit_to_app,
-              size: 130,
+              // iconData: Icons.exit_to_app,
+              // size: 130,
             ),
           );
         },
