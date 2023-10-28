@@ -113,9 +113,9 @@ class _ReadDrugLabelState extends State<ReadDrugLabel> {
             WidgetButton(
               label: 'QR Scan',
               pressFunc: () {
-                AppService().getQrData();
+                // AppService().getQrData();
 
-                // Get.to(const QrScanPage());
+                Get.to(const QrScanPage());
               },
               iconData: Icons.qr_code,
               size: 150,

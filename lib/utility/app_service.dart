@@ -540,4 +540,26 @@ class AppService {
           .set(qrModel.toMap());
     }
   }
+
+  Future<void> readQrFromResult({required String resultQr}) async {
+    try {
+      var result = await FirebaseFirestore.instance
+          .collection('qrdata')
+          .where('idHn', isEqualTo: resultQr)
+          .get();
+
+      if (appController.qrModels.isNotEmpty) {
+        appController.qrModels.clear();
+      }
+
+      if (result.docs.isNotEmpty) {
+        for (var element in result.docs) {
+          QrModel qrModel = QrModel.fromMap(element.data());
+          appController.qrModels.add(qrModel);
+        }
+      }
+    } finally {
+      appController.load.value = false;
+    }
+  }
 }

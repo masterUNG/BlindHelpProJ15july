@@ -8,6 +8,7 @@ import 'package:blindhelp/models/drug_label_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
 import 'package:blindhelp/models/medicene_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
+import 'package:blindhelp/models/qr_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,4 +46,6 @@ class AppController extends GetxController {
 
   RxList<ArticleModel> articleModels = <ArticleModel>[].obs;
   RxList<String> docIdArticles = <String>[].obs;
+
+  RxList<QrModel> qrModels = <QrModel>[].obs;
 }
