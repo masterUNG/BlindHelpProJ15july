@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:blindhelp/models/article_model.dart';
 import 'package:blindhelp/models/chat_model.dart';
@@ -9,6 +10,7 @@ import 'package:blindhelp/models/drug_label_model.dart';
 import 'package:blindhelp/models/hitory_drug_model.dart';
 import 'package:blindhelp/models/medicene_model.dart';
 import 'package:blindhelp/models/name_th_model.dart';
+import 'package:blindhelp/models/qr_model.dart';
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
@@ -514,5 +516,50 @@ class AppService {
         });
       }
     });
+  }
+
+  Future<void> getQrData() async {
+    int iRandom = Random().nextInt(1000);
+
+    for (var i = 0; i < 10; i++) {
+      QrModel qrModel = QrModel(
+          nameHospital: 'nameHospital$iRandom',
+          nameSurname: 'nameSurname$iRandom',
+          idHn: 'idHn$iRandom',
+          nameDrug: 'nameDrug$iRandom',
+          detailDrug: 'detailDrug$iRandom',
+          howtoDrug: 'howtoDrug$iRandom',
+          properiesDrug: 'properiesDrug$iRandom',
+          warnningDrug: 'warnningDrug$iRandom',
+          expireDate: Timestamp.fromDate(DateTime.now()),
+          remark: 'remark$iRandom');
+
+      FirebaseFirestore.instance
+          .collection('qrdata')
+          .doc()
+          .set(qrModel.toMap());
+    }
+  }
+
+  Future<void> readQrFromResult({required String resultQr}) async {
+    try {
+      var result = await FirebaseFirestore.instance
+          .collection('qrdata')
+          .where('idHn', isEqualTo: resultQr)
+          .get();
+
+      if (appController.qrModels.isNotEmpty) {
+        appController.qrModels.clear();
+      }
+
+      if (result.docs.isNotEmpty) {
+        for (var element in result.docs) {
+          QrModel qrModel = QrModel.fromMap(element.data());
+          appController.qrModels.add(qrModel);
+        }
+      }
+    } finally {
+      appController.load.value = false;
+    }
   }
 }

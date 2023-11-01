@@ -1,4 +1,5 @@
 import 'package:blindhelp/models/drug_label_model.dart';
+import 'package:blindhelp/states/qr_scan_page.dart';
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_dialog.dart';
@@ -36,6 +37,7 @@ class _ReadDrugLabelState extends State<ReadDrugLabel> {
           return appController.drugLabelModels.isEmpty
               ? const SizedBox()
               : ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 64),
                   itemCount: appController.drugLabelModels.length,
                   itemBuilder: (context, index) => Container(
                     margin: const EdgeInsets.only(right: 4, left: 4, bottom: 4),
@@ -77,9 +79,6 @@ class _ReadDrugLabelState extends State<ReadDrugLabel> {
                                               color: Colors.red,
                                               label: 'ลบฉาก',
                                               pressFunc: () {
-                                                print(
-                                                    'docIdDrug ---> ${appController.docIdDrugLabels[index]}');
-
                                                 AppService()
                                                     .deleteDrugLabel(
                                                         docIdDrugLabel:
@@ -106,36 +105,55 @@ class _ReadDrugLabelState extends State<ReadDrugLabel> {
                 );
         });
       }),
-      floatingActionButton: WidgetButton(
-          size: 160,
-          label: 'เพิ่มฉลากยา',
-          pressFunc: () {
-            AppDialog(context: context).normalDialog(
-              tilte: 'เพิ่มฉลากยา',
-              contentWidget: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  WidgetText(data: 'โปรดเลือกวีธี การเพิ่มฉลากยา'),
-                ],
-              ),
-              firstAction: WidgetTextButton(
-                label: 'Camera',
+      bottomSheet: SizedBox(
+        height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            WidgetButton(
+              label: 'QR Scan',
+              pressFunc: () {
+                // AppService().getQrData();
+
+                Get.to(const QrScanPage());
+              },
+              iconData: Icons.qr_code,
+              size: 150,
+            ),
+            WidgetButton(
+                size: 160,
+                label: 'เพิ่มฉลากยา',
                 pressFunc: () {
-                  Get.back();
-                  processTakePhotoUpdateInsert(imageSource: ImageSource.camera);
+                  AppDialog(context: context).normalDialog(
+                    tilte: 'เพิ่มฉลากยา',
+                    contentWidget: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        WidgetText(data: 'โปรดเลือกวีธี การเพิ่มฉลากยา'),
+                      ],
+                    ),
+                    firstAction: WidgetTextButton(
+                      label: 'Camera',
+                      pressFunc: () {
+                        Get.back();
+                        processTakePhotoUpdateInsert(
+                            imageSource: ImageSource.camera);
+                      },
+                    ),
+                    secondAction: WidgetTextButton(
+                      label: 'Gallery',
+                      pressFunc: () {
+                        Get.back();
+                        processTakePhotoUpdateInsert(
+                            imageSource: ImageSource.gallery);
+                      },
+                    ),
+                  );
                 },
-              ),
-              secondAction: WidgetTextButton(
-                label: 'Gallery',
-                pressFunc: () {
-                  Get.back();
-                  processTakePhotoUpdateInsert(
-                      imageSource: ImageSource.gallery);
-                },
-              ),
-            );
-          },
-          iconData: Icons.add_box),
+                iconData: Icons.add_box),
+          ],
+        ),
+      ),
     );
   }
 
