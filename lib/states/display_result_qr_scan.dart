@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
 import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_two_text.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,6 @@ import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/widgets/widget_progress.dart';
 import 'package:blindhelp/widgets/widget_text.dart';
-import 'package:blindhelp/widgets/widget_text_rich.dart';
 
 class DisplayResultQRscan extends StatefulWidget {
   const DisplayResultQRscan({
