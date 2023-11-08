@@ -519,9 +519,10 @@ class AppService {
   }
 
   Future<void> getQrData() async {
-    int iRandom = Random().nextInt(1000);
+   
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 5; i++) {
+       int iRandom = Random().nextInt(1000);
       QrModel qrModel = QrModel(
           nameHospital: 'nameHospital$iRandom',
           nameSurname: 'nameSurname$iRandom',
@@ -532,7 +533,7 @@ class AppService {
           properiesDrug: 'properiesDrug$iRandom',
           warnningDrug: 'warnningDrug$iRandom',
           expireDate: Timestamp.fromDate(DateTime.now()),
-          remark: 'remark$iRandom');
+          remark: 'remark$iRandom', Hn: '');
 
       FirebaseFirestore.instance
           .collection('qrdata')

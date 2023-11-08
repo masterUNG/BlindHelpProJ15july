@@ -40,6 +40,7 @@ class _DisplayResultQRscanState extends State<DisplayResultQRscan> {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(child: Obx(() {
+        print('##8nov qrModel ---> ${appController.qrModels.last.toMap()}');
         return appController.load.value
             ? const WidgetProgress()
             : appController.qrModels.isEmpty
@@ -58,7 +59,7 @@ class _DisplayResultQRscanState extends State<DisplayResultQRscan> {
                       ),
                       WidgetTwoText(
                         head: 'เลขที่ประจำตัว ผู้ป่วย (HN)',
-                        value: appController.qrModels.last.idHn,
+                        value: appController.qrModels.last.Hn,
                       ),
                       WidgetTwoText(
                         head: 'ชื่อยา ชื่อสามัญทางยา',
