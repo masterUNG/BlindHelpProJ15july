@@ -11,17 +11,17 @@
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>18.0</string>
+	<string>19.0</string>
 	<key>CFBundleName</key>
 	<string>Blind Help</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.18</string>
+	<string>1.19</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>18</string>
+	<string>19</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -54,7 +54,7 @@
     <key>NSMicrophoneUsageDescription</key>
     <string>Require Image for Registed or Scan QR code</string>
     <key>NSContactsUsageDescription</key>
-    <string>$(PRODUCT_NAME) contact use</string>
+    <string>You need to provide contact access to link and manage contacts.</string>
     <key>io.flutter.embedded_views_preview</key>
     <string>YES</string>
 </dict>
