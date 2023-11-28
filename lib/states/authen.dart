@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/states/create_new_account.dart';
 import 'package:blindhelp/utility/app_constant.dart';
@@ -120,28 +122,45 @@ class _AuthenState extends State<Authen> {
                             .doc(uid)
                             .get()
                             .then((value) async {
-                              
-                          if (appController.remember.value) {
-                            SharedPreferences preferences =
-                                await SharedPreferences.getInstance();
-                            preferences.setBool('remember', true);
-                          }
-
                           Get.back();
+
                           UserModel userModel =
                               UserModel.fromMap(value.data()!);
-                          appController.userModelLogins.add(userModel);
-                          if (userModel.typeUser == AppConstant.typeUsers[0]) {
-                            Get.offAllNamed('/user');
-                          } else if (userModel.typeUser ==
-                              AppConstant.typeUsers[1]) {
-                            Get.offAllNamed('/helper');
+
+                          if (userModel.activeAccount!) {
+                            appController.userModelLogins.add(userModel);
+
+                            if (appController.remember.value) {
+                              SharedPreferences preferences =
+                                  await SharedPreferences.getInstance();
+                              preferences.setBool('remember', true);
+                            }
+
+                            if (userModel.typeUser ==
+                                AppConstant.typeUsers[0]) {
+                              Get.offAllNamed('/user');
+                            } else if (userModel.typeUser ==
+                                AppConstant.typeUsers[1]) {
+                              Get.offAllNamed('/helper');
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              AppSnackBar(
+                                  context: context,
+                                  title: 'Have Proble',
+                                  message: 'Please Restart');
+                            }
                           } else {
-                            // ignore: use_build_context_synchronously
-                            AppSnackBar(
-                                context: context,
-                                title: 'Have Proble',
-                                message: 'Please Restart');
+                            AppDialog(context: context).normalDialog(
+                                tilte: 'Account Delete',
+                                contentWidget: const WidgetText(
+                                    data:
+                                        'ไม่สามารถใช้ Account นี่ได้ เพราะ คุณลบข้อมูลไปแล้ว'),
+                                secondAction: WidgetButton(
+                                    label: 'OK',
+                                    pressFunc: () {
+                                      exit(0);
+                                    },
+                                    iconData: Icons.home_sharp));
                           }
                         });
                       }).catchError((onError) {
