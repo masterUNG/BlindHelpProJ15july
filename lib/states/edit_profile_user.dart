@@ -247,7 +247,7 @@ class _EditProfileUserState extends State<EditProfileUser> {
           const SizedBox(
             height: 8,
           ),
-          WidgetDeleteAccount(),
+          const WidgetDeleteAccount(),
           const SizedBox(
             height: 8,
           ),
