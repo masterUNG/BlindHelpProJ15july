@@ -34,7 +34,7 @@ def keystoreProperties = new Properties()
 
    android {
     namespace "com.wasan.blindhelp"
-    compileSdkVersion 33
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -54,7 +54,7 @@ def keystoreProperties = new Properties()
         
         applicationId "com.wasan.blindhelp"
         minSdkVersion 24
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 9
         versionName '1.0.9'
     }
