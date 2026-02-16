@@ -51,7 +51,7 @@ dependencies:
   google_maps_flutter: ^2.3.1
   chat_bubbles: ^1.4.1
   url_launcher: ^6.1.12
-  scan: ^1.6.0
+  mobile_scanner: ^5.2.3
   flutter_signin_button: ^2.0.0
   google_sign_in: ^6.2.1
   # permission_handler: ^11.0.1
