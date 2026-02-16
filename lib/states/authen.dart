@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:blindhelp/models/user_model.dart';
 import 'package:blindhelp/states/create_new_account.dart';
 import 'package:blindhelp/utility/app_constant.dart';
 import 'package:blindhelp/utility/app_controller.dart';
 import 'package:blindhelp/utility/app_dialog.dart';
+import 'package:blindhelp/utility/app_service.dart';
 import 'package:blindhelp/utility/app_snackbar.dart';
 import 'package:blindhelp/widgets/widget_button.dart';
 import 'package:blindhelp/widgets/widget_button_outline.dart';
@@ -15,6 +14,8 @@ import 'package:blindhelp/widgets/widget_text_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/button_list.dart';
+import 'package:flutter_signin_button/button_view.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -122,45 +123,27 @@ class _AuthenState extends State<Authen> {
                             .doc(uid)
                             .get()
                             .then((value) async {
-                          Get.back();
+                          if (appController.remember.value) {
+                            SharedPreferences preferences =
+                                await SharedPreferences.getInstance();
+                            preferences.setBool('remember', true);
+                          }
 
+                          Get.back();
                           UserModel userModel =
                               UserModel.fromMap(value.data()!);
-
-                          if (userModel.activeAccount!) {
-                            appController.userModelLogins.add(userModel);
-
-                            if (appController.remember.value) {
-                              SharedPreferences preferences =
-                                  await SharedPreferences.getInstance();
-                              preferences.setBool('remember', true);
-                            }
-
-                            if (userModel.typeUser ==
-                                AppConstant.typeUsers[0]) {
-                              Get.offAllNamed('/user');
-                            } else if (userModel.typeUser ==
-                                AppConstant.typeUsers[1]) {
-                              Get.offAllNamed('/helper');
-                            } else {
-                              // ignore: use_build_context_synchronously
-                              AppSnackBar(
-                                  context: context,
-                                  title: 'Have Proble',
-                                  message: 'Please Restart');
-                            }
+                          appController.userModelLogins.add(userModel);
+                          if (userModel.typeUser == AppConstant.typeUsers[0]) {
+                            Get.offAllNamed('/user');
+                          } else if (userModel.typeUser ==
+                              AppConstant.typeUsers[1]) {
+                            Get.offAllNamed('/helper');
                           } else {
-                            AppDialog(context: context).normalDialog(
-                                tilte: 'Account Delete',
-                                contentWidget: const WidgetText(
-                                    data:
-                                        'ไม่สามารถใช้ Account นี่ได้ เพราะ คุณลบข้อมูลไปแล้ว'),
-                                secondAction: WidgetButton(
-                                    label: 'OK',
-                                    pressFunc: () {
-                                      exit(0);
-                                    },
-                                    iconData: Icons.home_sharp));
+                            // ignore: use_build_context_synchronously
+                            AppSnackBar(
+                                context: context,
+                                title: 'Have Proble',
+                                message: 'Please Restart');
                           }
                         });
                       }).catchError((onError) {
@@ -189,6 +172,15 @@ class _AuthenState extends State<Authen> {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SignInButton(Buttons.GoogleDark, onPressed: () {
+                  AppService().processGoogleAccountSignIn();
+                }, elevation: 0),
+              ],
+            )
           ],
         ),
       ),

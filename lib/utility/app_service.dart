@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -21,10 +19,10 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppService {
   AppController appController = Get.put(AppController());
@@ -522,8 +520,9 @@ class AppService {
   }
 
   Future<void> getQrData() async {
-    for (var i = 0; i < 5; i++) {
-      int iRandom = Random().nextInt(1000);
+    int iRandom = Random().nextInt(1000);
+
+    for (var i = 0; i < 10; i++) {
       QrModel qrModel = QrModel(
           nameHospital: 'nameHospital$iRandom',
           nameSurname: 'nameSurname$iRandom',
@@ -534,8 +533,7 @@ class AppService {
           properiesDrug: 'properiesDrug$iRandom',
           warnningDrug: 'warnningDrug$iRandom',
           expireDate: Timestamp.fromDate(DateTime.now()),
-          remark: 'remark$iRandom',
-          Hn: '');
+          remark: 'remark$iRandom');
 
       FirebaseFirestore.instance
           .collection('qrdata')
@@ -566,17 +564,21 @@ class AppService {
     }
   }
 
-  Future<void> processDeleteAccount() async {
-    Map<String, dynamic> map = appController.userModelLogins.last.toMap();
-    map['activeAccount'] = false;
+  Future<void> processGoogleAccountSignIn() async {
+    GoogleSignInAccount? googleSignInAccount = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
 
-    await editUserProfile(map: map).then((value) {
-      FirebaseAuth.instance.signOut().then((value) async {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
-        preferences.clear().then((value) {
-          Get.offAllNamed('/authen');
-        });
-      });
+    OAuthCredential oAuthCredential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+
+    await FirebaseAuth.instance.signInWithCredential(oAuthCredential).then(
+      (value) {
+        print('##29oct uid ===> ${value.user!.uid}');
+      },
+    ).catchError((onError) {
+      Get.snackbar(onError.code, onError.message);
     });
   }
 }
